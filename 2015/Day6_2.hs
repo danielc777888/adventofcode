@@ -4,7 +4,7 @@ main :: IO()
 main = interact solve
 
 solve :: String -> String
-solve = show . totalBrightness  .  foldr execute grid . map createInstruction . reverse . lines
+solve = show . totalBrightness  .  foldl execute grid . map createInstruction . lines
 
 type Brightness = Int
 type X = Int
@@ -26,17 +26,16 @@ row x = [((x, y), 0) | y <- [0..999]]
 grid :: Grid
 grid = [ row y | y <- [0..999]]
 
-execute :: Instruction -> Grid -> Grid
-execute (TurnOn r) g = map (map (\l -> if inRectangle r l then turnOn l else l)) g
-execute (TurnOff r) g = map (map (\l -> if inRectangle r l then turnOff l else l)) g
-execute (Toggle r) g = map (map (\l -> if inRectangle r l then toggle l else l)) g
+execute :: Grid -> Instruction -> Grid
+execute g (TurnOn r)  = map (map (\l -> if inRectangle r l then turnOn l else l)) g
+execute g (TurnOff r)  = map (map (\l -> if inRectangle r l then turnOff l else l)) g
+execute g (Toggle r)  = map (map (\l -> if inRectangle r l then toggle l else l)) g
 
 inRectangle :: Rectangle -> Light -> Bool
 inRectangle (Rectangle (x1, y1) (x2, y2)) ((l1, l2), _) = l1 >= x1 && l1 <= x2 && l2 >= y1 && l2 <= y2 
 
 totalBrightness :: Grid -> Int
-totalBrightness =  foldl' (\s l -> s + snd l) 0 . concat
---totalBrightness = length . concat
+totalBrightness =  foldl (\s l -> s + snd l) 0 . concat
 
 turnOn :: Light -> Light
 turnOn (p, b) = (p, b + 1)
