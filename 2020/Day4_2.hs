@@ -7,7 +7,7 @@ import Text.Regex.TDFA
 main :: IO()
 main = interact solve
 
-data Password = Password BirthYear IssueYear ExpirationYear Height HairColor EyeColor PassportID CountryID deriving (Show)
+data Passport = Passport BirthYear IssueYear ExpirationYear Height HairColor EyeColor PassportID CountryID deriving (Show)
 type BirthYear = Maybe Int
 type IssueYear = Maybe Int
 type ExpirationYear = Maybe Int
@@ -23,18 +23,18 @@ noStr :: String
 noStr = ""
 
 solve :: String -> String
-solve = show . length . filter valid . map password . passwordLines
+solve = show . length . filter valid . map passport . passportLines
 
-passwordLines :: String -> [[String]]
-passwordLines = passwordLines' . map words .  lines
+passportLines :: String -> [[String]]
+passportLines = passportLines' . map words .  lines
 
-passwordLines' :: [[String]] -> [[String]]
-passwordLines' [] = []
-passwordLines' xss = [concat (takeWhile (/= []) xss)] ++ passwordLines' (if null xss' then [] else tail xss' )
+passportLines' :: [[String]] -> [[String]]
+passportLines' [] = []
+passportLines' xss = [concat (takeWhile (/= []) xss)] ++ passportLines' (if null xss' then [] else tail xss' )
                      where xss' = dropWhile (/= []) xss
 
-password :: [String] -> Password
-password xs = Password byr iyr eyr hgt hcl elc pid cid
+passport :: [String] -> Passport
+passport xs = Passport byr iyr eyr hgt hcl elc pid cid
   where byr = birthYear (value xs "byr")
         iyr = issueYear (value xs "iyr")
         eyr = expirationYear  (value xs "eyr")
@@ -44,8 +44,8 @@ password xs = Password byr iyr eyr hgt hcl elc pid cid
         pid = passportID (value xs "pid")
         cid = countryID (value xs "cid")
 
-valid :: Password -> Bool
-valid (Password byr iyr eyr hgt hcl ecl pid cid)
+valid :: Passport -> Bool
+valid (Passport byr iyr eyr hgt hcl ecl pid cid)
        | isJust byr && isJust iyr && isJust eyr && isJust hgt && isJust hcl && isJust ecl && isJust pid = True
        | otherwise = False
 
