@@ -17,8 +17,6 @@ type EyeColor = Maybe String
 type PassportID = Maybe Int
 type CountryID = Maybe Int
 
-type Field = String
-
 noStr :: String
 noStr = ""
 
@@ -30,7 +28,7 @@ passportLines = passportLines' . map words .  lines
 
 passportLines' :: [[String]] -> [[String]]
 passportLines' [] = []
-passportLines' xss = [concat (takeWhile (/= []) xss)] ++ passportLines' (if null xss' then [] else tail xss' )
+passportLines' xss = [concat (takeWhile (/= []) xss)] ++ passportLines' (if null xss' then [] else tail xss')
                      where xss' = dropWhile (/= []) xss
 
 passport :: [String] -> Passport
@@ -45,11 +43,10 @@ passport xs = Passport byr iyr eyr hgt hcl elc pid cid
         cid = countryID (value xs "cid")
 
 valid :: Passport -> Bool
-valid (Passport byr iyr eyr hgt hcl ecl pid cid)
-       | isJust byr && isJust iyr && isJust eyr && isJust hgt && isJust hcl && isJust ecl && isJust pid = True
-       | otherwise = False
+valid (Passport (Just _) (Just _) (Just _) (Just _) (Just _) (Just _) (Just _) _) = True
+valid _ = False
 
-value :: [String] -> Field -> String
+value :: [String] -> String -> String
 value xs f = if null xs' then noStr else tail (snd (break (==':') (head xs')))
   where xs' = filter (f `isPrefixOf`) xs
 
@@ -57,19 +54,19 @@ birthYear :: String -> BirthYear
 birthYear xs
   | xs =~ "^[0-9]{4}$"::Bool = if x >= 1920 && x <= 2002 then Just x else Nothing
   | otherwise = Nothing
-  where x = read  xs::Int
+  where x = read xs::Int
   
 issueYear :: String -> IssueYear
 issueYear xs
   | xs =~ "^[0-9]{4}$"::Bool = if x >= 2010 && x <= 2020 then Just x else Nothing
   | otherwise = Nothing
-  where x = read  xs::Int
+  where x = read xs::Int
 
 expirationYear :: String -> ExpirationYear
 expirationYear xs
   | xs =~ "^[0-9]{4}$"::Bool = if x >= 2020 && x <= 2030 then Just x else Nothing
   | otherwise = Nothing
-  where x = read  xs::Int
+  where x = read xs::Int
 
 height :: String -> Height
 height xs
@@ -79,23 +76,14 @@ height xs
         u = snd (break isLetter xs)
         valid = if u == "cm" then x >= 150 && x <= 193 else x >= 59 && x <= 76
 
-
 hairColor :: String -> HairColor
-hairColor xs
-  | xs =~ "^#[0-9a-f]{6}$"::Bool = Just xs
-  | otherwise = Nothing
+hairColor xs = if xs =~ "^#[0-9a-f]{6}$"::Bool then Just xs else Nothing
 
 eyeColor :: String -> EyeColor
-eyeColor xs
-  | xs =~ "^(amb|blu|brn|gry|grn|hzl|oth)$"::Bool = Just xs
-  | otherwise = Nothing
+eyeColor xs = if xs =~ "^(amb|blu|brn|gry|grn|hzl|oth)$"::Bool then Just xs else Nothing
 
 passportID :: String -> PassportID
-passportID xs
-  | xs =~ "^[0-9]{9}$"::Bool = Just (read xs::Int)
-  | otherwise = Nothing
+passportID xs = if xs =~ "^[0-9]{9}$"::Bool then Just (read xs::Int) else Nothing
 
 countryID :: String -> CountryID
-countryID xs
-  | xs =~ "^[0-9]+$"::Bool = Just (read xs::Int)
-  | otherwise = Nothing
+countryID xs = if xs =~ "^[0-9]+$"::Bool then Just (read xs::Int) else Nothing
