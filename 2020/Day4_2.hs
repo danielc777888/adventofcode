@@ -51,33 +51,25 @@ value xs f = if null xs' then noStr else tail (snd (break (==':') (head xs')))
   where xs' = filter (f `isPrefixOf`) xs
 
 birthYear :: String -> BirthYear
-birthYear xs
-  | xs =~ "^[0-9]{4}$"::Bool = if x >= 1920 && x <= 2002 then Just x else Nothing
-  | otherwise = Nothing
+birthYear xs = if (xs =~ "^[0-9]{4}$"::Bool) && x >= 1920 && x <= 2002 then Just x else Nothing
   where x = read xs::Int
   
 issueYear :: String -> IssueYear
-issueYear xs
-  | xs =~ "^[0-9]{4}$"::Bool = if x >= 2010 && x <= 2020 then Just x else Nothing
-  | otherwise = Nothing
+issueYear xs = if (xs =~ "^[0-9]{4}$"::Bool) && x >= 2010 && x <= 2020 then Just x else Nothing
   where x = read xs::Int
 
 expirationYear :: String -> ExpirationYear
-expirationYear xs
-  | xs =~ "^[0-9]{4}$"::Bool = if x >= 2020 && x <= 2030 then Just x else Nothing
-  | otherwise = Nothing
+expirationYear xs = if (xs =~ "^[0-9]{4}$"::Bool) && x >= 2020 && x <= 2030 then Just x else Nothing
   where x = read xs::Int
 
 height :: String -> Height
-height xs
-  | xs =~ "^[0-9]{2,3}(cm|in)$"::Bool = if valid then Just x else Nothing 
-  | otherwise = Nothing
+height xs = if (xs =~ "^[0-9]{2,3}(cm|in)$"::Bool) && valid then Just x else Nothing 
   where x = read (takeWhile isDigit xs)::Int
         u = snd (break isLetter xs)
         valid = if u == "cm" then x >= 150 && x <= 193 else x >= 59 && x <= 76
 
 hairColor :: String -> HairColor
-hairColor xs = if xs =~ "^#[0-9a-f]{6}$"::Bool then Just xs else Nothing
+hairColor xs = if (xs =~ "^#[0-9a-f]{6}$"::Bool) then Just xs else Nothing
 
 eyeColor :: String -> EyeColor
 eyeColor xs = if xs =~ "^(amb|blu|brn|gry|grn|hzl|oth)$"::Bool then Just xs else Nothing
