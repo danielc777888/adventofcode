@@ -26,31 +26,7 @@ valid :: [Int] -> Bool
 valid (y:[]) = True
 valid (x:y:xs) = if (y - x) > 3 then False else valid (y:xs)
 
-
---TODO write own performance subsequences functionsx
-
 subs :: [Int] -> [[Int]]
 subs [] = [[]]
-subs [x] = [[x], []]
-subs (x:xs) = is ++ ts' ++ rs ++ rs'
-  where is = initSubs (x:xs)
-        ts = filter (\xs -> length xs >= 3) is
-        ts'= map (\xs -> [head xs, last xs]) ts
-        ts'' = filter (\xs -> length xs >= 3) is
-        rs = concat $ map (\xs -> remSubs xs) ts''
-        rs' = concat $ map (\xs -> map reverse (remSubs (reverse xs))) ts''
-       
-initSubs :: [Int] -> [[Int]]
-initSubs [] = [[]]
-initSubs (x:xs) = tail (inits (x:xs)) ++ initSubs xs
-
-remSubs :: [Int] -> [[Int]]
-remSubs [] = [[]]
-remSubs [x] = [[]]
-remSubs (x:y:[]) = [[]]
-remSubs (x:y:z:[]) = [[]] 
-remSubs (x:y:z:xs) = [s1] ++ [s2] ++ [s3] ++ remSubs s1 ++ remSubs s2 ++ remSubs s3
-  where s1 = x:y:xs
-        s2 = x:z:xs
-        s3 = x:xs
+subs (x:xs) = subs xs ++ map (x:) (subs xs)
         
