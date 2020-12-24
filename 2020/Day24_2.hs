@@ -75,12 +75,8 @@ counts = Map.size . Map.filter (==black)
 tilesToFlip :: Grid -> Grid
 tilesToFlip g = Map.map flipTile $ Map.filterWithKey(\k v ->
                                                      let a = adjacent k
-                                                         n = length $ filter (\c -> blackTile c g) a
+                                                         n = length $ filter (\c -> fromMaybe white (Map.lookup c g)) a
                                                      in  (v==black && (n == 0 || n > 2)) || (v==white && n == 2) ) g
 
 adjacent :: Coord -> [Coord]
 adjacent (x, y) = [(x, y - 2), (x, y + 2), (x - 1, y + 1), (x - 1, y - 1), (x + 1, y + 1), (x + 1, y - 1)]
-
-blackTile :: Coord -> Grid -> Bool
-blackTile c g = if isJust t then (fromJust t)==black else white
-  where t = Map.lookup c g
