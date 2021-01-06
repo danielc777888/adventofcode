@@ -35,7 +35,6 @@ eval (Con x) = x
 eval (Bin Plus e1 e2) = eval e1 + eval e2
 eval (Bin Mul e1 e2) = eval e1 * eval e2
 eval (Bin Minus e1 e2) = eval e1 - eval e2
---eval (Bin Mul e1 e2) = eval e1 * eval e2
 
 apply :: Parser a -> String -> [(a, String)]
 apply (Parser p) s = p s
@@ -63,10 +62,10 @@ factor = token (constant <|> paren expr)
   
 constant = do {n <- nat; return (Con n)}
 
-addop = (symbol "/" >> return Div) <|>
+addop = (symbol "*" >> return Mul) <|>
         (symbol "-" >> return Minus)
 
-mulop = (symbol "*" >> return Mul) <|>
+mulop = (symbol "/" >> return Div) <|>
         (symbol "+" >> return Plus)
 
 
