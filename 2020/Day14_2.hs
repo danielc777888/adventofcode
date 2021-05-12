@@ -11,7 +11,7 @@ type Mem = (Address, Int)
 type Bit = Int
 
 solve :: String -> String
-solve = show. sum . map snd . keepLatest . sortOn fst .  run . program . lines
+solve = show . sum . map snd . keepLatest . sortOn fst . run . program . lines
 
 program :: [String] -> [Bitmask]
 program [] = []
@@ -38,22 +38,34 @@ run' (b, []) = []
 run' (b, (m:ms)) = write b m ++ run' (b, ms)
 
 write :: String -> (Address, Int) -> [(Address, Int)]
-write b (a, v) = map (\xs -> (toInt (reverse xs), v)) $  map (map digitToInt) m'
-  where b' = concat $ map show $ reverse $ toBits a
-        b'' = (replicate (36 - length b') '0') ++ b'
-        z = zip b b''
-        m = map (\(x, y) -> if x == 'X' || x == '1' then x else y) z
-        m' = expand m
+write b (a, v) = map (\xs -> (bitsToAddress xs, v)) m'
+  where b' = addressToBits a
+        m' = expand (applyMask b b')
+
+applyMask :: String -> String -> String
+applyMask b b' = map modifyBit (zip b b')
+
+modifyBit :: (Char, Char) -> Char
+modifyBit (x, y) 
+    | x == '0' = y
+    | x == '1' = '1'
+    | x == 'X' = 'X'
 
 expand :: String -> [String]
 expand xs = map(\c -> replace c xs) cs
-   where cs = replicateM (length $ filter (=='X') xs) "01"
+   where cs = sort $ replicateM (length $ filter (=='X') xs) "01"
 
 replace :: String -> String -> String
-replace [] _ = []
-replace (x:xs) ys = l ++ [x] ++ replace xs (tail r) 
-  where (l, r) = break (=='X') ys
-  
+replace [] ys = ys
+replace (x:xs) (y:ys) = if y == 'X' then x:replace xs ys else y:replace (x:xs) ys
+
+addressToBits :: Int -> String
+addressToBits n = (replicate (36 - length b) '0') ++ b
+        where b = concat $ map show $ reverse $ toBits n
+
+bitsToAddress :: String -> Int
+bitsToAddress b = toInt $ reverse $ map digitToInt b
+
 toBits :: Int -> [Bit]
 toBits 0 = []
 toBits n = n `mod` 2 : toBits (n `div` 2)
@@ -64,5 +76,3 @@ toInt = foldr (\x y -> x + 2*y) 0
 keepLatest :: [(Address, Int)] -> [(Address, Int)]
 keepLatest [] = []
 keepLatest (x:xs)  = [last (takeWhile (\y -> fst y == fst x) (x:xs))] ++ keepLatest (dropWhile (\y -> fst y == fst x) (x:xs))
-
-
