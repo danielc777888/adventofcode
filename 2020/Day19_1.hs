@@ -1,3 +1,7 @@
+import Data.List
+import Data.Maybe
+
+
 main :: IO()
 main = interact solve
 
@@ -6,12 +10,12 @@ type Rule = (Int, RuleDef)
 data RuleDef = Const Char
           | RuleDef [Int]
           | Or [Int] [Int] deriving Show
-          
+
 type Message = String
 
 solve :: String -> String
---solve = show . length . filter id . matches . parse . lines
-solve = show . parse . lines
+solve = show . length . filter id . matches . parse . lines
+--solve = show . parse . lines
 
 parse :: [String] -> ([Rule], [Message])
 parse xs = (rs, ms)
@@ -28,7 +32,7 @@ rules (x:xs) = (n, rd):rules xs
           rd = ruleDef $ tail $ snd bs
 
 ruleDef :: String -> RuleDef
-ruleDef xs 
+ruleDef xs
     | '|' `elem` xs = Or (ints lh) (ints rh)
     | '"' `elem` xs = Const (xs!!2)
     | otherwise = RuleDef (ints xs)
@@ -41,7 +45,8 @@ ints xs = map (\x -> read x :: Int) (words xs)
 --ints xs = map (\x -> 0) (words xs)
 
 matches :: ([Rule], [Message]) -> [Bool]
-matches = undefined
+matches (rs, ms) = map (match r0 rs) ms
+  where r0 = fromJust $ find (\r -> fst r == 0) rs
 
-match :: Message -> Rule -> Bool
-match = undefined
+match :: Rule -> [Rule] -> Message -> Bool
+match r rs m = True
