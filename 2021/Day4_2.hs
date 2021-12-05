@@ -10,7 +10,7 @@ main :: IO()
 main = interact solve
 
 solve :: String -> String
-solve = show .  score . play . mkGame . lines
+solve = show . score .  play . mkGame . lines
 
 mkGame :: [String] -> Game
 mkGame (x:xs) = (ns, bs)
@@ -30,9 +30,10 @@ mkBoard xs = (rows, cols)
 
 
 play :: Game -> (Int, Board)
-play ((x:xs), bs) = if null ws then play (xs, bs') else (x, head ws)
+play ((x:xs), bs) = if null nws then (x, head ws) else play (xs, nws)
     where bs' = map (\(rs, cs) -> ( map(\r -> S.delete x r) rs, map (\c -> S.delete x c) cs)) bs
           ws = filter wins bs'
+          nws = filter (not . wins) bs'
 
 score :: (Int, Board) -> Int
 score (n, (rs, cs)) = n * sum (concat (map S.toList rs) )
