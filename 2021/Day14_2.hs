@@ -5,45 +5,35 @@ import qualified Data.Map as M
 
 type Polymer = String
 type Rules = M.Map String Char
+type Elements = M.Map Char Integer
 
 main :: IO()
 main = interact solve
 
 solve :: String -> String
--- solve =  show . diff . counts 1 . sort . pairInsertion 40 . rules . lines
-solve =  show . pairInsertion 1 . rules . lines
+solve =  show . diff . M.toList . pairInsertions 40 . rules . lines
+--solve =  show . pairInsertions 4 . rules . lines
 
-rules :: [String] -> (Polymer, Rules)
-rules xs = (head xs, M.fromList rs)
+rules :: [String] -> (Polymer, Rules, Elements)
+rules xs = (p, M.fromList rs, M.fromList (counts 1 (sort p)))
     where rs = map (\x -> let ws = words x in
                               (ws!!0, head (ws!!2)) ) (drop 2 xs)
+          p = head xs
 
-    {-
-pairInsertions :: Int -> (Polymer, Rules) -> (Polymer, Rules)
-pairInsertions 0 (p, rs) = (p, rs)
-pairInsertions n (p, rs) = pairInsertions (n-1) (p', rs)
-    where xs = chunk p
-          h = head p
-          p' = h:concatMap (\x -> drop 1(pairInsertion x rs)) xs
-          -}
+pairInsertions :: Int -> (Polymer, Rules, Elements) -> Elements
+pairInsertions n (x, rs, es) = snd $ foldr (\_ (y,z) -> pairInsertion y z rs) (x,es) [1..n]
 
-pairInsertion :: Int -> (Polymer,Rules) -> Polymer
--- pairInsertion n (x:[]) _ = [x]
-pairInsertion n (x:[], _) = [x]
-pairInsertion 0 (p, _) = p
-pairInsertion n ((x:y:xs), rs) = pairInsertion (n-1) ([x,el], rs) ++ pairInsertion (n-1) ((y:xs), rs)
+pairInsertion :: Polymer -> Elements -> Rules -> (Polymer, Elements)
+pairInsertion (x:[]) es _ = ([x], es)
+pairInsertion (x:y:xs) es rs = (x:el:p, es'')
     where el = fromJust (M.lookup (x:y:[])  rs)
+          es' = M.insertWith (+) el 1 es
+          (p, es'') = pairInsertion (y:xs) es' rs
+counts :: Integer -> Polymer -> [(Char, Integer)]
+counts n (x:[]) = [(x, n)]
+counts n (x:y:xs) = if x == y then counts (n+1) (y:xs) else (x, n):counts 1 (y:xs)
 
-counts :: Integer -> Polymer -> [(Integer, Char)]
-counts n (x:[]) = [(n, x)]
-counts n (x:y:xs) = if x == y then counts (n+1) (y:xs) else (n, x):counts 1 (y:xs)
+diff :: [(Char, Integer)] -> Integer
+diff xs = snd (last xs') - snd (head xs')
+    where xs' = sortOn snd xs
 
-diff :: [(Integer, Char)] -> Integer
-diff xs = fst (last xs') - fst (head xs')
-    where xs' = sort xs
-
-chunk :: Polymer -> [Polymer]
-chunk [] = [[]]
-chunk (x:[]) = [[]]
-chunk (x:y:[]) = [[x,y]]
-chunk (x:y:xs) = [[x,y]] ++ chunk (y:xs)
