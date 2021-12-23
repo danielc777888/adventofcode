@@ -1,4 +1,4 @@
-
+import Data.Maybe
 import qualified Data.Map as M
 
 data Vertex  = Start [Vertex]
@@ -24,7 +24,8 @@ insertNode xs m
     | b == "start" = M.insertWith (++) b [a] m
     | a == "end" = M.insertWith (++) b [a] m
     | b == "end" = M.insertWith (++) a [b] m
-    | otherwise = M.insertWith (++) a [b] $ M.insertWith (++) b [a] m
+    -- | otherwise = M.insertWith (++) a [b] $ M.insertWith (++) b [a] m
+    | otherwise = M.insertWith (++) a [b] m
     where (a, b) = (takeWhile (/='-') xs, drop 1 (dropWhile (/='-') xs))
 
 mkVertex :: String -> Vertex
@@ -35,7 +36,15 @@ mkVertex xs
 
 
 glue :: M.Map String [String] -> Vertex
-glue m =
+glue m = Start vs'
+    where vs = fromJust (M.lookup "start" m)
+          vs' = map (glue' m) vs
+
+glue' :: M.Map String [String] -> String -> Vertex
+glue' m "end" = End
+glue' m x = Vertex x vs'
+     where vs = fromMaybe [] (M.lookup x m)
+           vs' = map (glue' m) vs
 
 paths :: Vertex -> [Path]
 paths = undefined
