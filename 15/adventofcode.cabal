@@ -1,4 +1,4 @@
-cabal-version:       >=1.10
+cabal-version:       3.6
 
 name:                adventofcode
 version:             0.1.0.0
@@ -7,17 +7,22 @@ author:              daniel cabral
 maintainer:          danielc777888@gmail.com
 build-type:          Simple
 extra-source-files:  CHANGELOG.md
+tested-with: GHC == 9.2.2
 
 executable 04TheIdealStockingStuffer1
   main-is:             04TheIdealStockingStuffer1.hs
-  build-depends:       base >=4.14 && <4.15
-                     , cryptonite == 0.27
-                     , bytestring == 0.10.10.0
+  build-depends:    base ^>=4.16.1.0,
+        bytestring ^>= 0.11.3.1,
+        text ^>= 1.2.5.0,
+        containers ^>= 0.6.5.1,
+        cryptonite ^>= 0.30
   default-language:    Haskell2010
 
 executable 04TheIdealStockingStuffer2
   main-is:             04TheIdealStockingStuffer2.hs
-  build-depends:       base >=4.14 && <4.15
-                     , cryptonite == 0.27
-                     , bytestring == 0.10.10.0
+  build-depends:    base ^>=4.16.1.0,
+        bytestring ^>= 0.11.3.1,
+        text ^>= 1.2.5.0,
+        containers ^>= 0.6.5.1,
+        cryptonite ^>= 0.30
   default-language:    Haskell2010
