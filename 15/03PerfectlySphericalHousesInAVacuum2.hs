@@ -1,12 +1,10 @@
-
-
-main :: IO()
-main = interact solve
+main :: IO ()
+main = interact (solve . head . lines)
 
 solve :: String -> String
-solve xs = show . length . remdups . qsort $ simulate (roboSantaInstructions xs) ++  simulate (santaInstructions xs)
---solve xs = show .  remdups . qsort $ simulate (roboSantaInstructions xs)
+solve xs = show . length . remdups . qsort $ simulate (roboSantaInstructions xs) ++ simulate (santaInstructions xs)
 
+--solve xs = show .  remdups . qsort $ simulate (roboSantaInstructions xs)
 
 data Direction = North | South | East | West
 
@@ -19,16 +17,16 @@ direction '^' = North
 direction 'v' = South
 direction '>' = East
 direction '<' = West
+direction _ = error "invalid direction"
 
 santaInstructions :: String -> String
-santaInstructions xs = map snd ( filter (odd . fst) (zip [1..] xs))
+santaInstructions xs = map snd (filter (odd . fst) (zip [1 ..] xs))
 
 roboSantaInstructions :: String -> String
-roboSantaInstructions xs = map snd ( filter (even . fst) (zip [1..] xs))
-
+roboSantaInstructions xs = map snd (filter (even . fst) (zip [1 ..] xs))
 
 simulate :: String -> Locations
-simulate  = remdups . qsort . foldr (\x (y:ys) -> move y (direction x) : y : ys) [(0,0)] . reverse
+simulate = remdups . qsort . foldr (\x (y : ys) -> move y (direction x) : y : ys) [(0, 0)] . reverse
 
 move :: Location -> Direction -> Location
 move (x, y) North = (x, y + 1)
@@ -39,13 +37,14 @@ move (x, y) West = (x - 1, y)
 qsort :: Locations -> Locations
 qsort [] = []
 qsort [x] = [x]
-qsort (x:xs) = sortp xs [] []
-  where sortp [] us vs = qsort us ++ [x] ++ qsort vs
-        sortp (y:xs) us vs = if (fst y < fst x || snd y < snd x)
-                             then sortp xs (y:us) vs
-                             else sortp xs us (y:vs)
-
+qsort (x : xs) = sortp xs [] []
+  where
+    sortp [] us vs = qsort us ++ [x] ++ qsort vs
+    sortp (y : xs) us vs =
+      if (fst y < fst x || snd y < snd x)
+        then sortp xs (y : us) vs
+        else sortp xs us (y : vs)
 
 remdups :: Locations -> Locations
 remdups [] = []
-remdups (x:xs) = x:remdups (dropWhile (==x) xs)
+remdups (x : xs) = x : remdups (dropWhile (== x) xs)
