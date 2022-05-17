@@ -14,3 +14,8 @@
 ## constraints
 - should not take more than 4GB mem ram
 - should complete in at most 15s
+
+## process
+- make it work
+- make it fast enough (if time permits)
+- make it pretty (if time permits)
