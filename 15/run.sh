@@ -19,4 +19,4 @@ function run
     cat $input | ./$1.out +RTS -M4096m -K8m -sstderr
 }
 
-compile $1 && run $1
+compile $1 && run $1 $2
