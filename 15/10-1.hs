@@ -1,3 +1,4 @@
+import AOC.Loop (apply)
 import Data.Char
 
 main :: IO ()
@@ -13,7 +14,3 @@ lookAndSay = f 0
     f n (x : y : ys)
       | x == y = f (n + 1) (y : ys)
       | otherwise = intToDigit (n + 1) : x : (f 0 (y : ys))
-
-apply :: Int -> (a -> a) -> a -> a
-apply 0 f = id
-apply n f = apply (n - 1) f . f
