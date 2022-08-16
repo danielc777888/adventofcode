@@ -1,7 +1,7 @@
 import Data.Char
 
 main :: IO ()
-main = interact solve
+main = interact (solve . increment . solve)
 
 type Password = String
 
