@@ -115,7 +115,10 @@ executable 12-1
 executable 12-2
   import: common
   main-is:             12-2.hs
-
+  build-depends: aeson ^>= 2.1,
+                 scientific ^>= 0.3.7.0,
+                 vector ^>= 0.13.0.0
+  
 executable 13-1
   import: common
   main-is:             13-1.hs
