@@ -1,6 +1,6 @@
 import Data.List
 import Data.Function
-import AOC.Loop
+import AOC.Loop (apply)
 import Data.Tuple
 
 type Distance = Int
@@ -20,10 +20,10 @@ main :: IO()
 main = interact solve'
 
 solve :: String -> String
-solve = show . winner . race 2503 . map reindeer . lines 
+solve = show . winner distance . race 2503 . map reindeer . lines 
 
 solve' :: String -> String
-solve' = show . winner' . race 2503 . map reindeer . lines
+solve' = show . winner points . race 2503 . map reindeer . lines
 
 reindeer :: String -> Reindeer
 reindeer xs = case words xs of
@@ -34,11 +34,8 @@ reindeer xs = case words xs of
 race :: Int -> [Reindeer] -> [Reindeer]
 race t xs = apply t (tally . map step) xs
 
-winner :: [Reindeer] -> Reindeer
-winner = maximumBy (compare `on` distance)
-
-winner' :: [Reindeer] -> Reindeer
-winner' = maximumBy (compare `on` points)
+winner :: (Reindeer -> Int) -> [Reindeer] -> Reindeer
+winner f = maximumBy (compare `on` f)
 
 step :: Reindeer -> Reindeer
 step (Reindeer n as (d, t) td p)
@@ -50,4 +47,3 @@ step (Reindeer n as (d, t) td p)
 tally :: [Reindeer] -> [Reindeer]
 tally xs = map (\r -> if distance r == md then r { points = (points r) + 1 } else r) xs
   where md = maximum (map distance xs)
-    
