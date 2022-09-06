@@ -127,13 +127,9 @@ executable 13-2
   import: common
   main-is:             13-2.hs
 
-executable 14-1
+executable 14
   import: common
-  main-is:             14-1.hs
-
-executable 14-2
-  import: common
-  main-is:             14-2.hs
+  main-is:             14.hs
 
 executable 15-1
   import: common
