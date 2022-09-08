@@ -7,7 +7,8 @@ library
     build-depends:
        base ^>=4.16.1.0
     exposed-modules:
-       AOC.Loop
+       AOC.Loop,
+       AOC.PlumbingCombinator
     hs-source-dirs: ., AOC
     default-language: Haskell2010
 
