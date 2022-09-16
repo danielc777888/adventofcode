@@ -143,13 +143,9 @@ executable 17
   import: common
   main-is:             17.hs
 
-executable 18-1
+executable 18
   import: common
-  main-is:             18-1.hs
-
-executable 18-2
-  import: common
-  main-is:             18-2.hs
+  main-is:             18.hs
 
 executable 19-1
   import: common
