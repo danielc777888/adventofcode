@@ -1,16 +1,18 @@
-import qualified Data.Map as M
+import AOC.PlumbingCombinator (fork)
 import Data.Function
 import Data.List
-import AOC.PlumbingCombinator (fork)
+import Data.Map qualified as M
 
 type Compounds = M.Map String Int
 
-data Sue = Sue {
-  num :: Int,
-  diffValue :: Int,
-  compounds :: Compounds } deriving Show
+data Sue = Sue
+  { num :: Int,
+    diffValue :: Int,
+    compounds :: Compounds
+  }
+  deriving (Show)
 
-main :: IO()
+main :: IO ()
 main = interact $ show . fork (solve1, solve2)
 
 solve1 :: String -> String
@@ -20,16 +22,19 @@ solve2 :: String -> String
 solve2 = show . minimumBy (compare `on` diffValue) . map (diff' analysis . sue) . lines
 
 analysis :: Compounds
-analysis = M.fromList [("children", 3),
-                       ("cats", 7),
-                       ("samoyeds", 2),
-                       ("pomeranians", 3),
-                       ("akitas", 0),
-                       ("vizslas", 0),
-                       ("goldfish", 5),
-                       ("trees", 3),
-                       ("cars", 2),
-                       ("perfumes", 1)]
+analysis =
+  M.fromList
+    [ ("children", 3),
+      ("cats", 7),
+      ("samoyeds", 2),
+      ("pomeranians", 3),
+      ("akitas", 0),
+      ("vizslas", 0),
+      ("goldfish", 5),
+      ("trees", 3),
+      ("cars", 2),
+      ("perfumes", 1)
+    ]
 
 sue :: String -> Sue
 sue x = case words x of
@@ -37,12 +42,14 @@ sue x = case words x of
 
 diff :: Compounds -> Sue -> Sue
 diff m (Sue n _ sc) = Sue n d sc
-  where d = sum $ M.elems $ M.intersectionWithKey (\k a b -> abs (subtract b a))  sc m
+  where
+    d = sum $ M.elems $ M.intersectionWithKey (\k a b -> abs (subtract b a)) sc m
 
 diff' :: Compounds -> Sue -> Sue
 diff' m (Sue n _ sc) = Sue n d sc
-  where d = sum $ M.elems $ M.intersectionWithKey f sc m
-        f k v1 v2
-          | (k == "cats" || k == "trees") = if v1 > v2 then 0 else (v2 - v1) + 1
-          | (k == "goldfish" || k == "pomeranians") = if v1 < v2 then 0 else (v1 - v2) + 1
-          | otherwise = abs (subtract v2 v1)
+  where
+    d = sum $ M.elems $ M.intersectionWithKey f sc m
+    f k v1 v2
+      | (k == "cats" || k == "trees") = if v1 > v2 then 0 else (v2 - v1) + 1
+      | (k == "goldfish" || k == "pomeranians") = if v1 < v2 then 0 else (v1 - v2) + 1
+      | otherwise = abs (subtract v2 v1)

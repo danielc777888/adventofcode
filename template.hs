@@ -1,6 +1,6 @@
 import AOC.PlumbingCombinator (fork)
 
-main :: IO()
+main :: IO ()
 main = interact $ show . fork (solve1, solve2)
 
 solve1 :: String -> String

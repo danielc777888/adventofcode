@@ -4,7 +4,7 @@ main = interact (solve . head . lines)
 solve :: String -> String
 solve xs = show . length . remdups . qsort $ simulate (roboSantaInstructions xs) ++ simulate (santaInstructions xs)
 
---solve xs = show .  remdups . qsort $ simulate (roboSantaInstructions xs)
+-- solve xs = show .  remdups . qsort $ simulate (roboSantaInstructions xs)
 
 data Direction = North | South | East | West
 

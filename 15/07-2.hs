@@ -101,27 +101,27 @@ blank :: Int
 blank = (-1)
 
 toNot :: [String] -> Instruction
-toNot xs = GateInstruction (Not (xs !! 1, blank)) (xs !! 3, blank) --NOT x -> h
+toNot xs = GateInstruction (Not (xs !! 1, blank)) (xs !! 3, blank) -- NOT x -> h
 
 toAnd :: [String] -> Instruction
-toAnd xs = GateInstruction (And (x, if x == "1" then 1 else blank) (xs !! 2, blank)) (xs !! 4, blank) --x AND y -> d
+toAnd xs = GateInstruction (And (x, if x == "1" then 1 else blank) (xs !! 2, blank)) (xs !! 4, blank) -- x AND y -> d
   where
     x = xs !! 0
 
 toOr :: [String] -> Instruction
-toOr xs = GateInstruction (Or (xs !! 0, blank) (xs !! 2, blank)) (xs !! 4, blank) --x OR y -> d
+toOr xs = GateInstruction (Or (xs !! 0, blank) (xs !! 2, blank)) (xs !! 4, blank) -- x OR y -> d
 
 toLShift :: [String] -> Instruction
-toLShift xs = GateInstruction (LShift (xs !! 0, blank) (toInt (xs !! 2))) (xs !! 4, blank) --x LSHIFT 2 -> f
+toLShift xs = GateInstruction (LShift (xs !! 0, blank) (toInt (xs !! 2))) (xs !! 4, blank) -- x LSHIFT 2 -> f
 
 toRShift :: [String] -> Instruction
-toRShift xs = GateInstruction (RShift (xs !! 0, blank) (toInt (xs !! 2))) (xs !! 4, blank) --x RSHIFT 2 -> f
+toRShift xs = GateInstruction (RShift (xs !! 0, blank) (toInt (xs !! 2))) (xs !! 4, blank) -- x RSHIFT 2 -> f
 
 toSignal :: [String] -> Instruction
-toSignal xs = SignalInstruction (xs !! 2, toInt (xs !! 0)) --123 -> x
+toSignal xs = SignalInstruction (xs !! 2, toInt (xs !! 0)) -- 123 -> x
 
 toWire :: [String] -> Instruction
-toWire xs = WireInstruction (xs !! 0, blank) (xs !! 2, blank) --lx -> x
+toWire xs = WireInstruction (xs !! 0, blank) (xs !! 2, blank) -- lx -> x
 
 toInt :: String -> Int
 toInt xs = (read xs) :: Int

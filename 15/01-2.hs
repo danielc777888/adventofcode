@@ -5,5 +5,5 @@ inits :: [a] -> [[a]]
 inits [x] = [[x]]
 inits xs = [xs] ++ inits (init xs)
 
-main :: IO()
+main :: IO ()
 main = interact (show . solve)

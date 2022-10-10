@@ -1,5 +1,5 @@
 module AOC.PlumbingCombinator
-  ( fork
+  ( fork,
   )
 where
 
