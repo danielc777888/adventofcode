@@ -153,50 +153,27 @@ executable 19
   import: common
   main-is:             19.hs
 
-executable 20-1
+executable 20
   import: common
-  main-is:             20-1.hs
+  main-is:             20.hs
 
-executable 20-2
+executable 21
   import: common
-  main-is:             20-2.hs
+  main-is:             21.hs
 
-executable 21-1
+executable 22
   import: common
-  main-is:             21-1.hs
+  main-is:             22.hs
 
-executable 21-2
+executable 23
   import: common
-  main-is:             21-2.hs
+  main-is:             23.hs
 
-executable 22-1
+executable 24
   import: common
-  main-is:             22-1.hs
+  main-is:             24.hs
 
-executable 22-2
+executable 25
   import: common
-  main-is:             22-2.hs
+  main-is:             25.hs
 
-executable 23-1
-  import: common
-  main-is:             23-1.hs
-
-executable 23-2
-  import: common
-  main-is:             23-2.hs
-
-executable 24-1
-  import: common
-  main-is:             24-1.hs
-
-executable 24-2
-  import: common
-  main-is:             24-2.hs
-
-executable 25-1
-  import: common
-  main-is:             25-1.hs
-
-executable 25-2
-  import: common
-  main-is:             25-2.hs
