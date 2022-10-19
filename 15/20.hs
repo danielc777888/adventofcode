@@ -1,8 +1,11 @@
 -- mathematics, number theory
+-- part 2 failed, too inefficient
 
 import AOC.PlumbingCombinator (fork)
 import Data.Array
 import Data.List
+import qualified Math.NumberTheory.ArithmeticFunctions as NT
+import qualified Data.IntSet as IS (elems)
 
 main :: IO ()
 main = interact $ show . fork (solve1, id)
@@ -48,3 +51,12 @@ divisors n = (1 :) $ (n :) $ nub $ concat [[x, n `div` x] | x <- [2 .. u], n `re
   where
     u = (floor . sqrt . fromIntegral) n
 
+
+-- solution from : https://github.com/byorgey/AoC/blob/master/2015/20/20.hs
+
+
+main' = do
+  print (find ((>= (33100000 :: Int)) . (*10) . NT.sigma 1) [1 :: Int .. 2900000])
+  print (find ((>= (29000000 :: Int)) . elfValue2) [1 :: Int .. 2900000])
+
+elfValue2 n = 11 * (NT.sigma 1 n - sum (takeWhile (\d -> n `div` d > 50) (IS.elems (NT.divisorsSmall n))))
