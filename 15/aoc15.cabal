@@ -17,6 +17,7 @@ common common
                     text ^>= 1.2.5.0,
                     containers ^>= 0.6.5.1,
                     split ^>= 0.2.3.5,
+                    array ^>= 0.5.4.0,
                     aoc
   ghc-options: -O2 -ferror-spans -threaded -rtsopts
 
