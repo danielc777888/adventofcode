@@ -22,10 +22,10 @@ main :: IO ()
 main = interact $ show . fork (solve1, solve2)
 
 solve1 :: String -> String
-solve1 = show . minimum . fights . mkBoss
+solve1 = show . minimum . fights wins . mkBoss
 
 solve2 :: String -> String
-solve2 = id
+solve2 = show . maximum . fights losses . mkBoss
 
 mkBoss :: String -> Player
 mkBoss x = Player hp d a 0
@@ -35,8 +35,8 @@ mkBoss x = Player hp d a 0
     d = read $ (words (ls !! 1)) !! 1
     a = read $ (words (ls !! 2)) !! 1
 
-fights :: Player -> [Int]
-fights boss = map cost (wins players boss)
+fights :: ([Player] -> Player -> [Player]) -> Player -> [Int]
+fights f boss = map cost (f players boss)
   where
     ps = purchases weapons armor rings
     players = map (\(Item c d a) -> Player 100 d a c) ps
@@ -44,6 +44,12 @@ fights boss = map cost (wins players boss)
 wins :: [Player] -> Player -> [Player]
 wins [] _ = []
 wins (p : ps) boss = if r then w : wins ps boss else wins ps boss
+  where
+    (r, w) = fight p boss True
+
+losses :: [Player] -> Player -> [Player]
+losses [] _ = []
+losses (p : ps) boss = if not r then w : losses ps boss else losses ps boss
   where
     (r, w) = fight p boss True
 
