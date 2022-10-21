@@ -1,11 +1,13 @@
 -- mathematics, number theory
 -- part 2 failed, too inefficient
 
+--hints
+--import qualified Data.Array.Unboxed as UA (UArray, assocs, accumArray)
+--import Data.List (find)
+
 import AOC.PlumbingCombinator (fork)
 import Data.Array
 import Data.List
-import qualified Math.NumberTheory.ArithmeticFunctions as NT
-import qualified Data.IntSet as IS (elems)
 
 main :: IO ()
 main = interact $ show . fork (solve1, id)
@@ -45,10 +47,24 @@ primes = f [2 ..]
   where
     f (p : xs) = p : f [x | x <- xs, not (x `mod` p == 0)]
 
--- credit goes to https://stackoverflow.com/questions/1480563/making-a-list-of-divisors-in-haskell
 divisors :: Int -> [Int]
 divisors n = (1 :) $ (n :) $ nub $ concat [[x, n `div` x] | x <- [2 .. u], n `rem` x == 0]
   where
     u = (floor . sqrt . fromIntegral) n
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
