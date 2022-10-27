@@ -70,5 +70,3 @@ steps' (x, l, xs) ys n zs
         )
         S.empty
         (S.take 100 ys)
-
-
