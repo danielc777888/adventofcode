@@ -11,14 +11,15 @@ tested-with: GHC == 9.2.2
 
 common common
   default-language: GHC2021
-  build-depends:    base ^>=4.16.1.0,
+  build-depends:    base ^>=4.17.0.0,
                     bytestring ^>= 0.11.3.1,
                     deepseq ^>= 1.4.6.1,
-                    text ^>= 1.2.5.0,
+                    text ^>= 2.0.1,
                     containers ^>= 0.6.5.1,
                     split ^>= 0.2.3.5,
                     array ^>= 0.5.4.0,
                     arithmoi ^>= 0.12.0.2,
+                    integer-gmp ^>= 1.1,
                     aoc
   ghc-options: -O2 -ferror-spans -threaded -rtsopts
 

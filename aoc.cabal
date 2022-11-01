@@ -5,7 +5,7 @@ build-type: Simple
 
 library
     build-depends:
-       base ^>=4.16.1.0,
+       base ^>=4.17.0.0,
        containers ^>=0.6.0.1
     exposed-modules:
        AOC.GameOfLife,
