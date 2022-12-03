@@ -9,6 +9,7 @@ library
        containers ^>=0.6.0.1
     exposed-modules:
        AOC.GameOfLife,
+       AOC.List,
        AOC.Loop,
        AOC.Number,
        AOC.PlumbingCombinator
