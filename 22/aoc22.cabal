@@ -35,63 +35,33 @@ executable 03
   import: common
   main-is:             03.hs
 
-executable 04-1
+executable 04
   import: common
-  main-is:             04-1.hs
-  build-depends: cryptonite ^>= 0.30
+  main-is:             04.hs
 
-executable 04-2
+executable 05
   import: common
-  main-is:             04-2.hs
-  build-depends: cryptonite ^>= 0.30
+  main-is:             05.hs
 
-executable 05-1
+executable 06
   import: common
-  main-is:             05-1.hs
+  main-is:             06.hs
 
-executable 05-2
+executable 07
   import: common
-  main-is:             05-2.hs
+  main-is:             07.hs
 
-executable 06-1
+executable 08
   import: common
-  main-is:             06-1.hs
+  main-is:             08.hs
 
-executable 06-2
+executable 09
   import: common
-  main-is:             06-2.hs
+  main-is:             09.hs
 
-executable 07-1
+executable 10
   import: common
-  main-is:             07-1.hs
-
-executable 07-2
-  import: common
-  main-is:             07-2.hs
-
-executable 08-1
-  import: common
-  main-is:             08-1.hs
-
-executable 08-2
-  import: common
-  main-is:             08-2.hs
-
-executable 09-1
-  import: common
-  main-is:             09-1.hs
-
-executable 09-2
-  import: common
-  main-is:             09-2.hs
-
-executable 10-1
-  import: common
-  main-is:             10-1.hs
-
-executable 10-2
-  import: common
-  main-is:             10-2.hs
+  main-is:             10.hs
 
 executable 11-1
   import: common
@@ -111,7 +81,7 @@ executable 12-2
   build-depends: aeson ^>= 2.1,
                  scientific ^>= 0.3.7.0,
                  vector ^>= 0.13.0.0
-  
+
 executable 13-1
   import: common
   main-is:             13-1.hs
