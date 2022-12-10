@@ -1,3 +1,5 @@
+import AOC.List
+
 type Cycle = (Int, Int)
 
 data Instruction
@@ -9,14 +11,13 @@ main :: IO ()
 main = do
   c <- getContents
   print $ part1 c
-
--- print $ part2 c
+  putStrLn $ part2 c
 
 part1 :: String -> Int
 part1 = sum . map (uncurry strength) . cycles [19, 59 ..] . execute . program . lines
 
 part2 :: String -> String
-part2 = id
+part2 = unlines . render . take 6 . chunk 40 . execute . program . lines
 
 program :: [String] -> [Instruction]
 program xs = map mkInstruction xs
@@ -44,3 +45,8 @@ cycles is cs = map (cs !!) is'
   where
     is' = takeWhile (<= l) is
     l = length cs
+
+render :: [[Cycle]] -> [String]
+render xss = map (map (\(c, r) -> if any (== (c `mod` 40)) (positions r) then '#' else '.')) xss
+  where
+    positions p = [p, p + 1, p + 2]
