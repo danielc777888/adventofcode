@@ -1,6 +1,7 @@
 import Data.Char
 import Data.List
 import Data.Map qualified as M
+import Data.Maybe
 import Data.Set qualified as S
 
 type HeightMap = M.Map Location Int
@@ -16,8 +17,10 @@ main = do
 
 -- print $ part2 c
 
-part1 :: String -> (HeightMap, (Location, Location))
-part1 = heightMap . lines
+part1 :: String -> Int
+part1 = head . sort . map S.size . take 100 . paths . heightMap . lines
+
+-- part1 = take 10 . paths . heightMap . lines
 
 part2 :: String -> String
 part2 = id
@@ -31,12 +34,32 @@ heightMap xs = (hm, (s, e))
     e = fst $ head $ filter (\(k, v) -> v == endOrd) $ M.assocs hm
 
 paths :: (HeightMap, (Location, Location)) -> [Locations]
-paths (hm, (s, e)) = undefined
+paths (hm, (s, e)) = paths' hm s e S.empty
+
+paths' :: HeightMap -> Location -> Location -> Locations -> [Locations]
+paths' hm c e ls
+  | c == e = [ls]
+  | otherwise = concatMap (\l -> paths' hm l e (S.insert l ls)) ls'
+  where
+    ls' = validLocations hm c ls
+
+validLocations :: HeightMap -> Location -> Locations -> [Location]
+validLocations hm l@(x, y) ls = map fst ls'
+  where
+    v = fromJust $ M.lookup l hm
+    v' = if v == startOrd then ord 'a' else v
+    ls' = filter (\((a, b), mv) -> not (S.member (a, b) ls) && isJust mv && ((fromJust mv) - v' == 1 || (fromJust mv) <= v' || (fromJust mv) == endOrd)) $ [nw, w, sw, n, s, ne, e, se]
+    nw = ((x - 1, y - 1), M.lookup (x - 1, y - 1) hm)
+    w = ((x - 1, y), M.lookup (x - 1, y) hm)
+    sw = ((x - 1, y + 1), M.lookup (x - 1, y + 1) hm)
+    n = ((x, y - 1), M.lookup (x, y - 1) hm)
+    s = ((x, y + 1), M.lookup (x, y + 1) hm)
+    ne = ((x + 1, y - 1), M.lookup (x + 1, y - 1) hm)
+    e = ((x + 1, y), M.lookup (x + 1, y) hm)
+    se = ((x + 1, y + 1), M.lookup (x + 1, y + 1) hm)
 
 startOrd :: Int
 startOrd = ord 'S'
 
 endOrd :: Int
 endOrd = ord 'E'
-
-(fromList [((0, 0), 83), ((0, 1), 97), ((0, 2), 98), ((0, 3), 113), ((0, 4), 112), ((0, 5), 111), ((0, 6), 110), ((0, 7), 109), ((1, 0), 97), ((1, 1), 98), ((1, 2), 99), ((1, 3), 114), ((1, 4), 121), ((1, 5), 120), ((1, 6), 120), ((1, 7), 108), ((2, 0), 97), ((2, 1), 99), ((2, 2), 99), ((2, 3), 115), ((2, 4), 122), ((2, 5), 69), ((2, 6), 120), ((2, 7), 107), ((3, 0), 97), ((3, 1), 99), ((3, 2), 99), ((3, 3), 116), ((3, 4), 117), ((3, 5), 118), ((3, 6), 119), ((3, 7), 106), ((4, 0), 97), ((4, 1), 98), ((4, 2), 100), ((4, 3), 101), ((4, 4), 102), ((4, 5), 103), ((4, 6), 104), ((4, 7), 105)], ((0, 0), (2, 5)))
