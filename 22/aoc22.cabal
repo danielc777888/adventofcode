@@ -67,16 +67,9 @@ executable 11
   import: common
   main-is:             11.hs
 
-executable 12-1
+executable 12
   import: common
-  main-is:             12-1.hs
-
-executable 12-2
-  import: common
-  main-is:             12-2.hs
-  build-depends: aeson ^>= 2.1,
-                 scientific ^>= 0.3.7.0,
-                 vector ^>= 0.13.0.0
+  main-is:             12.hs
 
 executable 13-1
   import: common
