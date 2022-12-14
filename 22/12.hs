@@ -39,6 +39,7 @@ paths (hm, (s, e)) = paths' hm s e S.empty
 paths' :: HeightMap -> Location -> Location -> Locations -> [Locations]
 paths' hm c e ls
   | c == e = [ls]
+  | null ls' = []
   | otherwise = concatMap (\l -> paths' hm l e (S.insert l ls)) ls'
   where
     ls' = validLocations hm c ls
