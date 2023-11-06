@@ -13,7 +13,7 @@ where
 
 import AOC.Loop (apply)
 import AOC.Number
-import Data.Map qualified as M
+import qualified Data.Map as M
 import Data.Maybe
 
 data Board = Board

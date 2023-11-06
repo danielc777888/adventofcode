@@ -1,1 +1,2 @@
 packages: aoc.cabal, 15/aoc15.cabal, 16/aoc16.cabal, 20/aoc20.cabal, 21/aoc21.cabal, 22/aoc22.cabal
+with-compiler: ghc-9.2.8
