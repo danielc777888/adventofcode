@@ -1,6 +1,6 @@
 import AOC.GameOfLife
 import AOC.PlumbingCombinator (fork)
-import Data.Map qualified as M
+import qualified Data.Map as M
 import Data.Maybe
 
 main :: IO ()

@@ -33,6 +33,9 @@ data Game = Game
 type Purchases = Spell
 
 main :: IO ()
+main = undefined
+
+{--
 main = interact $ show . fork (solve1, id)
 
 solve1 :: String -> String
@@ -76,3 +79,4 @@ p2Turn = undefined
 
 nextSpell :: Game -> Game
 nextSpell = undefined
+--}

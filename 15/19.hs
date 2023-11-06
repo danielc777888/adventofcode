@@ -6,18 +6,19 @@
 import AOC.PlumbingCombinator (fork)
 import Control.Applicative
 import Control.Arrow
-import Data.ByteString.Char8 qualified as C
+import qualified Data.ByteString.Char8 as C
 import Data.List
 import Data.List.Split
-import Data.Map qualified as M
+import qualified Data.Map as M
 import Data.Maybe
 import Data.Semigroup
-import Data.Set qualified as S
+import qualified Data.Set as S
 
 type Replacements = M.Map C.ByteString [C.ByteString]
 
 main :: IO ()
-main = interact $ show . fork (solve1, solve3)
+--main = interact $ show . fork (solve1, solve3)
+main = undefined
 
 solve1 :: String -> String
 solve1 = show . S.size . molecules . replacements . C.lines . C.pack

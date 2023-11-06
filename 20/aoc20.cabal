@@ -9,12 +9,12 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
 common common
-  build-depends:    base ^>=4.16.4.0,
-        bytestring ^>= 0.11.3.1,
-        text ^>= 2.0.1,
-        containers ^>= 0.6.5.1,
-        array ^>= 0.5.4.0,
-        aoc
+  build-depends:    base ^>=4.17.2.0,
+                    bytestring ^>= 0.11.3.1,
+                    text ^>= 2.0.1,
+                    containers ^>= 0.6.5.1,
+                    array ^>= 0.5.4.0,
+                    aoc
   ghc-options: -O2 -ferror-spans -threaded -rtsopts
 
 executable 01-1

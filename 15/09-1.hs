@@ -1,5 +1,5 @@
 import Data.List
-import Data.Map qualified as M
+import qualified Data.Map as M
 import Data.Maybe
 
 type Distance = Int

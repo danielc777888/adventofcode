@@ -1,7 +1,7 @@
 import AOC.PlumbingCombinator (fork)
 import Data.Function
 import Data.List
-import Data.Map qualified as M
+import qualified Data.Map as M
 
 type Compounds = M.Map String Int
 

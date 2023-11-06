@@ -1,5 +1,4 @@
 cabal-version:       3.6
-                     
 name:                aoc16
 version:             0.1.0.0
 license-file:        LICENSE
@@ -9,7 +8,7 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
 common common
-  build-depends:    base ^>=4.16.4.0,
+  build-depends:    base ^>=4.17.2.0,
                     bytestring ^>= 0.11.3.1,
                     text ^>= 2.0.1,
                     containers ^>= 0.6.5.1,
@@ -117,4 +116,3 @@ executable 24
 executable 25
   import: common
   main-is:             25.hs
-
