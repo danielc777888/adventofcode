@@ -34,11 +34,11 @@ follow' :: (Int, Int) -> Direction -> Instruction -> (Direction, (Int, Int), [(I
 follow' (x, y) N (Instruction TurnRight n) = (E, (x + n, y), [(g, y) | g <- [x+1..(x+n)]])
 follow' (x, y) N (Instruction TurnLeft n) = (W, (x - n, y), [(g, y) | g <- [x-1, x-2..(x-n)]])
 follow' (x, y) E (Instruction TurnRight n) = (S, (x, y - n), [(x, g) | g <- [y-1, y-2..(y-n)]])
-follow' (x, y) E (Instruction TurnLeft n) = (N, (x, y + n), [(x, g) | g <- [y+1..(y+n)]])          
+follow' (x, y) E (Instruction TurnLeft n) = (N, (x, y + n), [(x, g) | g <- [y+1..(y+n)]])
 follow' (x, y) S (Instruction TurnRight n) = (W, (x - n, y), [(g, y) | g <- [x-1, x-2..(x-n)]])
 follow' (x, y) S (Instruction TurnLeft n) = (E, (x + n, y), [(g, y) | g <- [x+1..(x+n)]])
 follow' (x, y) W (Instruction TurnRight n) = (N, (x , y + n), [(x, g) | g <- [y+1..(y+n)]])
-follow' (x, y) W (Instruction TurnLeft n) = (S, (x , y - n), [(x, g) | g <- [y-1, y-2..(y-n)]])        
-          
+follow' (x, y) W (Instruction TurnLeft n) = (S, (x , y - n), [(x, g) | g <- [y-1, y-2..(y-n)]])
+
 distance :: (Int, Int) -> (Int, Int) -> Int
 distance (x, y) (x', y') = (abs x' - x) + (abs y' - y)

@@ -16,22 +16,36 @@ common common
                     integer-gmp ^>= 1.1,
                     aoc
   ghc-options: -O2 -ferror-spans -threaded -rtsopts
+  default-language: Haskell2010
 
 executable 01
   import: common
   main-is:             01.hs
 
-executable 02
+executable 02-1
   import: common
-  main-is:             02.hs
+  main-is:             02-1.hs
 
-executable 03
+executable 02-2
   import: common
-  main-is:             03.hs
+  main-is:             02-2.hs
 
-executable 04
+
+executable 03-1
   import: common
-  main-is:             04.hs
+  main-is:             03-1.hs
+
+executable 03-2
+  import: common
+  main-is:             03-2.hs
+
+executable 04-1
+  import: common
+  main-is:             04-1.hs
+
+executable 04-2
+  import: common
+  main-is:             04-2.hs
 
 executable 05
   import: common
