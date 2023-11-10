@@ -8,7 +8,7 @@ build-type:          Simple
 extra-source-files:  CHANGELOG.md
 
 common common
-  build-depends:    base ^>=4.17.2.0,
+  build-depends:    base ^>= 4.17.2.0,
                     bytestring ^>= 0.11.3.1,
                     text ^>= 2.0.1,
                     containers ^>= 0.6.5.1,
@@ -47,9 +47,15 @@ executable 04-2
   import: common
   main-is:             04-2.hs
 
-executable 05
+executable 05-1
   import: common
-  main-is:             05.hs
+  main-is:             05-1.hs
+  build-depends:       crypton ^>= 0.34
+
+executable 05-2
+  import: common
+  main-is:             05-2.hs
+  build-depends:       crypton ^>= 0.34
 
 executable 06
   import: common
