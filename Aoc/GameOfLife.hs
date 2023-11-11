@@ -1,4 +1,4 @@
-module AOC.GameOfLife
+module Aoc.GameOfLife
   ( board,
     corners,
     life,
@@ -11,8 +11,8 @@ module AOC.GameOfLife
   )
 where
 
-import AOC.Loop (apply)
-import AOC.Number
+import Aoc.Loop (apply)
+import Aoc.Number
 import qualified Data.Map as M
 import Data.Maybe
 

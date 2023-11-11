@@ -1,4 +1,4 @@
-import AOC.List (splitOn)
+import Aoc.List (splitOn)
 import Data.List (sort, sortBy)
 
 data Room = Room {

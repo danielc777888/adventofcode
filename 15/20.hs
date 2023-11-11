@@ -5,7 +5,7 @@
 -- import qualified Data.Array.Unboxed as UA (UArray, assocs, accumArray)
 -- import Data.List (find)
 
-import AOC.PlumbingCombinator (fork)
+import Aoc.PlumbingCombinator (fork)
 import Data.Array
 import Data.List
 

@@ -3,7 +3,7 @@
 -- part 2 threw in towel
 {-# LANGUAGE OverloadedStrings #-}
 
-import AOC.PlumbingCombinator (fork)
+import Aoc.PlumbingCombinator (fork)
 import Control.Applicative
 import Control.Arrow
 import qualified Data.ByteString.Char8 as C

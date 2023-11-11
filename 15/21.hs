@@ -1,4 +1,4 @@
-import AOC.PlumbingCombinator (fork)
+import Aoc.PlumbingCombinator (fork)
 import Data.List
 
 data Player = Player

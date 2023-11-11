@@ -1,5 +1,5 @@
 import Data.List (permutations,transpose)
-import AOC.List (chunk)
+import Aoc.List (chunk)
 
 type Triangle = [Int]
 

@@ -1,5 +1,5 @@
-import AOC.List (splitOn)
-import AOC.Loop (apply)
+import Aoc.List (splitOn)
+import Aoc.Loop (apply)
 import Data.List (sort, sortBy, intersperse, isInfixOf)
 import Data.Char (ord,chr)
 

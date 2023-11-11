@@ -1,4 +1,4 @@
-module AOC.Loop
+module Aoc.Loop
   ( apply,
   )
 where

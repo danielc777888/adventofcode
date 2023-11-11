@@ -1,4 +1,4 @@
-module AOC.Number
+module Aoc.Number
   ( Nat,
   )
 where

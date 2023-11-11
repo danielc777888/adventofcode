@@ -1,4 +1,4 @@
-import AOC.PlumbingCombinator (fork)
+import Aoc.PlumbingCombinator (fork)
 import Data.Function
 import Data.List
 import qualified Data.Map as M

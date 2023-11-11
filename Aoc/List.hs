@@ -1,4 +1,4 @@
-module AOC.List
+module Aoc.List
   ( chunk,
     splitOn,
   )

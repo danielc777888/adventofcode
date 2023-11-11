@@ -1,5 +1,5 @@
-import AOC.GameOfLife
-import AOC.PlumbingCombinator (fork)
+import Aoc.GameOfLife
+import Aoc.PlumbingCombinator (fork)
 import qualified Data.Map as M
 import Data.Maybe
 

@@ -1,4 +1,4 @@
-import AOC.Loop (apply)
+import Aoc.Loop (apply)
 import Data.Char
 
 main :: IO ()
