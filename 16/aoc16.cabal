@@ -57,9 +57,13 @@ executable 05-2
   main-is:             05-2.hs
   build-depends:       crypton ^>= 0.34
 
-executable 06
+executable 06-1
   import: common
-  main-is:             06.hs
+  main-is:             06-1.hs
+
+executable 06-2
+  import: common
+  main-is:             06-2.hs
 
 executable 07
   import: common
