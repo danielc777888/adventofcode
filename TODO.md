@@ -3,8 +3,13 @@
 ## map any input to any data type
 - create edsl for this
 
-## Data.List extensions
+## Aoc.List extensions
 - runCount of elements. eg. 16/6
+- check if all elements different eg. 16/7
+
+## Aoc.String
+- palindrome eg. 16/7
+- string pattern matchings inside/outside brackets eg. 16/7
 
 ## keypad + instructions
 - configurable keypad with instructions. eg. 16/2

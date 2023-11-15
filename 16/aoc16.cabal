@@ -65,9 +65,13 @@ executable 06-2
   import: common
   main-is:             06-2.hs
 
-executable 07
+executable 07-1
   import: common
-  main-is:             07.hs
+  main-is:             07-1.hs
+
+executable 07-2
+  import: common
+  main-is:             07-2.hs
 
 executable 08
   import: common
