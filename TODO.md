@@ -1,6 +1,9 @@
 # todo
 
-## map any input to any data type
+## general
+- custom prelude with Aoc.*
+
+## Input string patterns :: map any input to any data type
 - create edsl for this
 
 ## Aoc.List extensions
@@ -21,9 +24,18 @@
 - hex. eg. 16/5
 
 ## cryptography
+- in module Aoc.Crypto
 - encode/decode
 - shift cipher. eg 16/4
 - md5 hash. eg. 16/5
 
 ## coding stuffs
 - repitition coding. eg. 16/6
+
+## grids/screens with pixels
+- eg. 16/8
+- width/height
+- pixels/state change. switch on/off
+- update state, blocks
+- update state, rotate cols/rows
+- display grid nicely
