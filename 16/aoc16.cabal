@@ -81,9 +81,13 @@ executable 08-2
   import: common
   main-is:             08-2.hs
 
-executable 09
+executable 09-1
   import: common
-  main-is:             09.hs
+  main-is:             09-1.hs
+
+executable 09-2
+  import: common
+  main-is:             09-2.hs
 
 executable 10
   import: common
