@@ -1,21 +1,40 @@
+{-# LANGUAGE OverloadedStrings #-}
 
-main :: IO()
-main = interact solve
+import qualified Data.ByteString.Lazy.Char8 as BS
+import Data.Maybe
 
-solve :: String -> String
---solve = show . sum . map (length . expand) . lines
-solve = show . map (length . expand) . lines
+main :: IO ()
+main = BS.interact solve
 
-expand :: String -> String
-expand [] = []
-expand ('(':xs) = expand ex ++ expand xs'
-  where (s1,s2) = break (== ')') xs
-        (t,r) = marker s1
-        ex = concat (replicate r (take t (tail s2)))
-        xs' = drop t (tail s2)
-expand (x:xs) = x:expand xs
+solve :: BS.ByteString -> BS.ByteString
+solve = BS.pack . show . sum .  map (fromIntegral . BS.length . expand) . divide
 
-marker :: String -> (Int,Int)
-marker xs = case (words (map (\c -> if c == 'x' then ' ' else c) xs)) of
-  [x,y] -> (read x, read y)
-  _ -> error "marker: Unrecognized pattern"
+expand :: BS.ByteString -> BS.ByteString
+expand xs
+  | BS.null xs = BS.empty
+  | BS.head xs == '(' = let (s1,s2) = BS.break (== ')') (BS.drop 1 xs)
+                            (t,r) = marker s1
+                            t' = fromIntegral t
+                            r' = fromIntegral r
+                            ex = BS.concat (replicate r' (BS.take t' (BS.tail s2)))
+                            xs' = BS.drop t' (BS.tail s2)
+                        in BS.append (expand ex) (expand xs')
+  | otherwise = BS.cons (BS.head xs) (BS.tail xs)
+
+
+marker :: BS.ByteString -> (Int,Int)
+marker xs = case (BS.words (BS.map (\c -> if c == 'x' then ' ' else c) xs)) of
+  [x,y] -> (fst (fromJust (BS.readInt x)), fst (fromJust (BS.readInt y)))
+  _ -> error $ "marker: Unrecognized pattern " ++ (BS.unpack xs)
+
+divide :: BS.ByteString -> [BS.ByteString]
+divide xs
+  | BS.null xs = []
+  | BS.head xs == '(' = let (s1,s2) = BS.break (== ')') (BS.drop 1 xs)
+                            (t,r) = marker s1
+                            t' = fromIntegral t
+                        in
+                        BS.concat ["(",s1,")",BS.take t' (BS.drop 1 s2)]: divide (BS.drop (t'+1) s2)
+  | otherwise = let (s1,s2) = BS.break (== '(') xs
+                in
+                  s1:divide s2

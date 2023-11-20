@@ -39,3 +39,8 @@
 - update state, blocks
 - update state, rotate cols/rows
 - display grid nicely
+
+## decompress data
+- eg 16/9
+- run length encoding
+- divide and conquer
