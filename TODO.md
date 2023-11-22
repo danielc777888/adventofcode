@@ -44,3 +44,6 @@
 - eg 16/9
 - run length encoding
 - divide and conquer
+
+## binary trees
+- build, update, traverse. eg. perhaps 16/10
