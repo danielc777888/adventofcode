@@ -97,9 +97,13 @@ executable 10-2
   import: common
   main-is:             10-2.hs
 
-executable 11
+executable 11-1
   import: common
-  main-is:             11.hs
+  main-is:             11-1.hs
+
+executable 11-2
+  import: common
+  main-is:             11-2.hs
 
 executable 12
   import: common
