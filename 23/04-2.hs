@@ -1,5 +1,5 @@
-import Data.List
 import Data.Array
+import Data.List
 
 main :: IO ()
 main = interact solve
