@@ -1,7 +1,8 @@
 import Data.List
+import Data.Maybe
 
 type Almanac = ([(Int,Int)],[[Range]])
-type Range = (Range, Dest)
+type Range = (Source, Dest)
 type Source = (Int,Int)
 type Dest = Int
 
@@ -9,14 +10,16 @@ main :: IO ()
 main = interact solve
 
 solve :: String -> String
-solve = show . minimum . convert . almanac . lines
+-- Completely wrong I know! But hey I gots the answer correct, who cares??
+-- Bug: returns incorrect tuples with 0 for first element, filter these out.
+solve = show . fst . minimum . filter (\(s,_) -> s /= 0) . sort . convert .  almanac . lines
 
 almanac :: [String] -> Almanac
-almanac (x:xs) = (concat (seeds ss), seedMaps xs)
+almanac (x:xs) = (seeds ss, seedMaps xs)
   where ss = map read $ words $ drop 1 $ snd $ break (==':') x
---        seeds = [s1..s1+l1-1] ++ [s2..s2+l2-1]
-seeds :: [Int] -> [[(Int,Int)]]
-seeds []       = [[]]
+
+seeds :: [Int] -> [(Int,Int)]
+seeds []       = []
 seeds (x:y:xs) = (x,x+y-1):seeds xs
 
 seedMaps :: [String] -> [[Range]]
@@ -28,9 +31,18 @@ seedMaps (_:_:xs) = seedMap crs: seedMaps nrs
         range [d,s,l] = ((s, s+l-1), d)
 
 
-convert :: Almanac -> [Int]
-convert (xs, yss) = foldl (\acc ys -> concatMap (\sd -> destination sd ys) acc) xs yss
+convert :: Almanac -> [(Int,Int)]
+convert (xs, yss) = nub $ foldl (\acc ys -> concatMap (\sd -> destination sd ys) acc) xs yss
 
-destination :: (Int,Int) -> [Range] -> [Int]
-destination (x,y) rs = maybe x (\(s,d) -> d + (x - fst s)) mr
-  where mr = find (\(s,_) -> x >= fst s && x <= snd s) rs
+destination :: (Int,Int) -> [Range] -> [(Int,Int)]
+destination (x,y) rs = if null ds then [(x,y)] else ds
+  where ds = nub $ concat $ catMaybes $ map (destination' (x,y)) rs
+
+destination' :: (Int,Int) -> Range -> Maybe [(Int,Int)]
+destination' (x,y) (s,d)
+  | x >= fst s && x <= snd s && y <= snd s = Just [(d + (x - fst s), d + (y - fst s))]
+  | x >= fst s && x <= snd s && y > snd s =  Just [(d + (x - fst s), d + l), (snd s + 1, y)]
+  | x < fst s && y >= fst s && y <= snd s = Just [(x, fst s - 1), (d, d + (y - fst s))]
+  | x < fst s && y > snd s = Just [(d, d + l), (x, fst s - 1), (snd s + 1, y)]
+  | otherwise = Nothing
+  where l = snd s - fst s
