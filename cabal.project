@@ -1,2 +1,2 @@
 packages: aoc.cabal, */*.cabal
-with-compiler: ghc-9.4.7
+with-compiler: ghc-9.4.8
