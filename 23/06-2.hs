@@ -4,7 +4,7 @@ main :: IO ()
 main = interact solve
 
 solve :: String -> String
-solve = show . product .  filter (>0) . map (length . winners . distances) .  races . lines
+solve = show . product . filter (>0) . map (length . winners . distances) .  races . lines
 
 races :: [String] -> [(Int,Int)]
 races (x:y:[]) = [(ts, ds)]
