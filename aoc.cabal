@@ -14,4 +14,4 @@ library
        Aoc.Number,
        Aoc.PlumbingCombinator
     hs-source-dirs: ., Aoc
-    default-language: Haskell2010
+    default-language: GHC2021

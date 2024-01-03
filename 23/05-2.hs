@@ -23,30 +23,23 @@ almanac (x : xs) = (seeds ss, seedMaps xs)
   ss = map read $ words $ drop 1 $ snd $ break (== ':') x
 
 seeds :: [Int] -> [(Int, Int)]
-seeds [] = []
+seeds []           = []
 seeds (x : y : xs) = (x, x + y - 1) : seeds xs
 
 seedMaps :: [String] -> [[Range]]
 seedMaps [] = []
 seedMaps (_ : _ : xs) = seedMap crs : seedMaps nrs
- where
-  (crs, nrs) = break null xs
-  seedMap =
-    foldl
-      ( \acc s ->
-          let r = map read (words s)
-           in range r : acc
-      )
-      []
-  range [d, s, l] = ((s, s + l - 1), d)
+  where (crs, nrs) = break null xs
+        seedMap = foldl  (\acc s -> let r = map read (words s)
+                                    in range r : acc) []
+        range [d, s, l] = ((s, s + l - 1), d)
 
 convert :: Almanac -> [(Int, Int)]
 convert (xs, yss) = nub $ foldl (\acc ys -> concatMap (\sd -> destination sd ys) acc) xs yss
 
 destination :: (Int, Int) -> [Range] -> [(Int, Int)]
 destination (x, y) rs = if null ds then [(x, y)] else ds
- where
-  ds = nub $ concat $ catMaybes $ map (destination' (x, y)) rs
+  where ds = nub $ concat $ catMaybes $ map (destination' (x, y)) rs
 
 destination' :: (Int, Int) -> Range -> Maybe [(Int, Int)]
 destination' (x, y) (s, d)
