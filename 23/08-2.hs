@@ -69,19 +69,20 @@ run2 :: (String, Array Node (String,Node,String, [Node])) -> [(Node, (String,Nod
 run2 (xs, a) =  filter (\(i,e) -> length (idxs e) > 0) $ assocs a
 
 run :: (String, Array Node (String,Node,String, [Node])) -> Int
-run (xs, a) = run' a ys (length xs) (length ys) 0
+run (xs, a) = run' a' ys (length xs) (length ys) 0
   where ys = map fst $ filter (\(i,e) -> (last (startName e)) =='A') $ assocs a
+        a' = array (bounds a) $ map (\(i, (_,n,_,ns)) -> (i, (n,ns))) $ assocs a
        -- ys = map fst $ filter (\(i,e) -> startName e == "AAA") $ assocs a
     --  ys = ["AAA"]
 
-run' :: Array Node (String,Node,String,[Node]) -> [Node] -> Int -> Int -> Int -> Int
+run' :: Array Node (Node,[Node]) -> [Node] -> Int -> Int -> Int -> Int
 run' a xs step lx n
-  -- | n > 1000000000000 = n
-     | n > 14289612809129 = n
+     | n > 100000000000 = n
+  -- | n > 14289612809129 = n
  -- | n > 9003372036854775807 = n
      | length cIdxs > 0 = n + fromIntegral (head (head cIdxs))
      | otherwise = run' a xs' step lx (n + step)
   where ys = map (\x -> a!x) xs
-        xs' = map endIdx ys
-        ys' = concat $ map idxs ys
+        xs' = map fst ys
+        ys' = concat $ map snd ys
         cIdxs = filter ( (==lx) . length) $ groupBy (==) ys'
