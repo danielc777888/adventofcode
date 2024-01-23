@@ -10,12 +10,11 @@ import Data.Array
 import Data.List
 import qualified Data.Map as M
 import Data.Maybe
-import Data.Word
+import qualified Data.Vector as V
 
 type Network = (String, M.Map String (String, String))
---type Sims = M.Map String (String, [Int])
 type Sims = Array Node (String, Node, String, [Node])
-type Node = Word16
+type Node = Int
 
 main :: IO ()
 main = interact solve
@@ -30,9 +29,10 @@ sims (xs, m) = (xs, fromMap  (M.mapWithKey (sim xs' m []) m))
 
 sim :: [(Node, Char)] -> M.Map String (String, String)  -> [Node] -> String -> (String, String) -> (String, [Node])
 sim [] _ is ls _ = (ls, sort is)
-sim (x:xs) m is ls (l, r) = sim xs m is' ns (fromJust (M.lookup ns m))
+sim (x:xs) m is _ (l, r) = sim xs m is' ns (fromJust (M.lookup ns m))
   where ns = if snd x == 'L' then l else r
-        is' = if last ns == 'Z' || (last ls == 'Z' && fst x == 1) then fst x:is else is
+        --is' = if last ns == 'Z' || (last ls == 'Z' && fst x == 1) then fst x:is else is
+        is' = if last ns == 'Z' then fst x:is else is
 
 fromMap :: M.Map String (String, [Node]) -> Array Node (String, Node, String, [Node])
 fromMap m = array (1,fromIntegral (length xs)) xs'
@@ -47,16 +47,6 @@ findIdx s xs = fst $ fromJust $ find (\(_,(s',_,_,_)) -> s' == s) xs
 startName :: (String, Node, String, [Node]) -> String
 startName (x, _, _, _) = x
 
-endIdx :: (String, Node, String, [Node]) -> Node
-endIdx (_, x, _, _) = x
-
-endName :: (String, Node, String, [Node]) -> String
-endName (_, _, x, _) = x
-
-idxs :: (String, Node, String, [Node]) -> [Node]
-idxs (_, _, _, x) = x
-
-
 network :: [String] -> Network
 network xs = (head xs, m)
   where m = M.fromList $ map node $ drop 2 xs
@@ -65,24 +55,28 @@ network xs = (head xs, m)
           e       -> error ("invalid node pattern: " ++ show e)
 
 
-run2 :: (String, Array Node (String,Node,String, [Node])) -> [(Node, (String,Node,String,[Node]))]
-run2 (xs, a) =  filter (\(i,e) -> length (idxs e) > 0) $ assocs a
-
 run :: (String, Array Node (String,Node,String, [Node])) -> Int
-run (xs, a) = run' a' ys (length xs) (length ys) 0
-  where ys = map fst $ filter (\(i,e) -> (last (startName e)) =='A') $ assocs a
+run (xs, a) = run' v ys (length xs) (length ys) 0
+  where ys = map fst $ filter (\(_,e) -> (last (startName e)) =='A') $ assocs a
         a' = array (bounds a) $ map (\(i, (_,n,_,ns)) -> (i, (n,ns))) $ assocs a
-       -- ys = map fst $ filter (\(i,e) -> startName e == "AAA") $ assocs a
-    --  ys = ["AAA"]
+        v = V.fromList (elems a')
+        --ys = map fst $ filter (\(i,e) -> startName e == "AAA") $ assocs a
+        --ys = ["AAA"]
 
-run' :: Array Node (Node,[Node]) -> [Node] -> Int -> Int -> Int -> Int
-run' a xs step lx n
+run' :: V.Vector (Node,[Node]) -> [Node] -> Int -> Int -> Int -> Int
+run' v xs step lx n
      | n > 100000000000 = n
-  -- | n > 14289612809129 = n
- -- | n > 9003372036854775807 = n
-     | length cIdxs > 0 = n + fromIntegral (head (head cIdxs))
-     | otherwise = run' a xs' step lx (n + step)
-  where ys = map (\x -> a!x) xs
-        xs' = map fst ys
-        ys' = concat $ map snd ys
-        cIdxs = filter ( (==lx) . length) $ groupBy (==) ys'
+  -- | n > 14289612900000 = n
+     | isJust minIdx = n + (fromJust minIdx)
+     | otherwise = run' v xs' step lx (n + step)
+  where xs' = map (\x -> fst (V.unsafeIndex v (x-1))) xs
+        ys' = sort $ concatMap (\x -> snd (V.unsafeIndex v (x-1))) xs
+        minIdx = findMin ys' lx 1
+
+findMin :: [Node] -> Int -> Int -> Maybe Node
+findMin [] _ _ = Nothing
+findMin (x:[]) t c = if t == c then Just x else Nothing
+findMin (x:y:xs) t c
+  | x == y && (c+1) == t = Just x
+  | x == y = findMin (y:xs) t (c+1)
+  | otherwise = findMin (y:xs) t 1

@@ -14,6 +14,7 @@ common common
                     containers ^>= 0.6.5.1,
                     array ^>= 0.5.4.0,
                     integer-gmp ^>= 1.1,
+                    vector ^>= 0.13.1.0,
                     aoc
   ghc-options: -O2 -Wall -ferror-spans -threaded -rtsopts
   default-language: GHC2021
