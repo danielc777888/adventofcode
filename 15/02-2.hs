@@ -1,3 +1,5 @@
+-- 3812909
+
 main :: IO ()
 main = interact solve
 
@@ -6,7 +8,7 @@ solve = show . sum . ribbon . boxes . lines
 
 data Box = Box
   { length :: Int,
-    width :: Int,
+    width  :: Int,
     height :: Int
   }
   deriving (Show)
@@ -26,7 +28,7 @@ box xs b = box ys (b ++ [n])
     ys = safeTail (dropWhile (\x -> x /= 'x') xs)
 
 safeTail :: [a] -> [a]
-safeTail [] = []
+safeTail []       = []
 safeTail (x : xs) = xs
 
 ribbon :: [Box] -> [Int]

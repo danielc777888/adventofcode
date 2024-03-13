@@ -1,4 +1,6 @@
-module Aoc.PlumbingCombinator
+-- combinators
+
+module Aoc.Comb
   ( fork,
   )
 where

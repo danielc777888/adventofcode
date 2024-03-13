@@ -8,10 +8,10 @@ library
        base ^>=4.17.2.1,
        containers ^>=0.6.0.1
     exposed-modules:
-       Aoc.GameOfLife,
+       Aoc.GameLife,
        Aoc.List,
        Aoc.Loop,
        Aoc.Number,
-       Aoc.PlumbingCombinator
+       Aoc.Comb
     hs-source-dirs: ., Aoc
     default-language: GHC2021

@@ -1,3 +1,5 @@
+-- 1598415
+
 main :: IO ()
 main = interact solve
 
@@ -36,7 +38,7 @@ box xs b = box ys (b ++ [n])
     ys = safeTail (dropWhile (\x -> x /= 'x') xs)
 
 safeTail :: [a] -> [a]
-safeTail [] = []
+safeTail []       = []
 safeTail (x : xs) = xs
 
 wrappingPaper :: [Box] -> [Int]
