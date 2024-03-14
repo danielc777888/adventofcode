@@ -1,3 +1,5 @@
+-- 247
+
 import Data.Array
 import Data.List
 import qualified Data.Map as M
@@ -22,7 +24,6 @@ data Instruction
 main :: IO ()
 main = do
   contents <- getContents
-  print $ execute (program contents) 1 (M.fromList [("a", 0), ("b", 0)])
   print $ execute (program contents) 1 (M.fromList [("a", 1), ("b", 0)])
 
 program :: String -> Program
@@ -30,13 +31,13 @@ program s = listArray (1, length ls) (map instr ls)
   where
     ls = lines s
     instr x = case words x of
-      ["hlf", r] -> Hlf r
-      ["tpl", r] -> Tpl r
-      ["inc", r] -> Inc r
-      ["jmp", os] -> Jmp (offset os)
+      ["hlf", r]     -> Hlf r
+      ["tpl", r]     -> Tpl r
+      ["inc", r]     -> Inc r
+      ["jmp", os]    -> Jmp (offset os)
       ["jie", r, os] -> Jie (take 1 r) (offset os)
       ["jio", r, os] -> Jio (take 1 r) (offset os)
-      _ -> Nil
+      _              -> Nil
     offset x
       | "+" `isPrefixOf` x = read (tail x)
       | otherwise = read x

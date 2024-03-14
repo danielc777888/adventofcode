@@ -1,22 +1,22 @@
+-- 21367368
+
 import Data.List
 
 data Ingredient = Ingredient
-  { name :: String,
-    capacity :: Int,
+  { name       :: String,
+    capacity   :: Int,
     durability :: Int,
-    flavour :: Int,
-    texture :: Int,
-    calories :: Int
+    flavour    :: Int,
+    texture    :: Int,
+    calories   :: Int
   }
   deriving (Show)
 
 type Cookie = [Int]
 
-main = interact solve'
+main = interact solve
 
 solve = show . maximum . scores score . cookies . map ingredient . lines
-
-solve' = show . maximum . scores score' . cookies . map ingredient . lines
 
 ingredient :: String -> Ingredient
 ingredient s = case words s of

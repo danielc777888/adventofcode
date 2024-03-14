@@ -1,3 +1,5 @@
+-- 400410
+
 main :: IO ()
 main = interact solve
 
@@ -50,7 +52,7 @@ turnOff :: Light -> Light
 turnOff (p, _) = (p, Off)
 
 toggle :: Light -> Light
-toggle (p, On) = (p, Off)
+toggle (p, On)  = (p, Off)
 toggle (p, Off) = (p, On)
 
 createInstruction :: String -> Instruction

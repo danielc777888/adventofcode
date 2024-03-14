@@ -1,3 +1,5 @@
+-- 14710
+
 import Data.Bits hiding (And)
 import Data.Char
 import Data.List
@@ -44,7 +46,7 @@ run xs = if all resolved xs then wires else run (updateInstructions xs wires)
     wires = map wire $ filter (\x -> snd (wire x) /= blank) xs
 
 resolved :: Instruction -> Bool
-resolved (SignalInstruction _) = True
+resolved (SignalInstruction _)      = True
 resolved (GateInstruction _ (_, y)) = y /= blank
 resolved (WireInstruction _ (_, y)) = y /= blank
 
@@ -55,10 +57,10 @@ wire (WireInstruction _ w) = w
 
 signalsProvided :: Gate -> Bool
 signalsProvided (And (_, x) (_, y)) = x /= blank && y /= blank
-signalsProvided (Or (_, x) (_, y)) = x /= blank && y /= blank
-signalsProvided (LShift (_, x) _) = x /= blank
-signalsProvided (RShift (_, x) _) = x /= blank
-signalsProvided (Not (_, x)) = x /= blank
+signalsProvided (Or (_, x) (_, y))  = x /= blank && y /= blank
+signalsProvided (LShift (_, x) _)   = x /= blank
+signalsProvided (RShift (_, x) _)   = x /= blank
+signalsProvided (Not (_, x))        = x /= blank
 
 runInstruction :: Instruction -> Instruction
 runInstruction (SignalInstruction (x, y)) = SignalInstruction (x, y)
@@ -131,10 +133,10 @@ showWires = unlines . map (\x -> (fst x) ++ ":" ++ show (snd x))
 
 runGate :: Gate -> Signal
 runGate (And (_, x) (_, y)) = x .&. y
-runGate (Or (_, x) (_, y)) = x .|. y
-runGate (LShift (_, x) y) = shiftL x y
-runGate (RShift (_, x) y) = shiftR x y
-runGate (Not (_, x)) = 65535 - x
+runGate (Or (_, x) (_, y))  = x .|. y
+runGate (LShift (_, x) y)   = shiftL x y
+runGate (RShift (_, x) y)   = shiftR x y
+runGate (Not (_, x))        = 65535 - x
 
 data Instruction
   = SignalInstruction Wire

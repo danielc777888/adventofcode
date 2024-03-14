@@ -1,3 +1,5 @@
+-- 252594
+
 import Aoc.Loop (apply)
 import Data.Char
 

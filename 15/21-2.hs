@@ -1,31 +1,29 @@
-import Aoc.PlumbingCombinator (fork)
+-- 158
+
 import Data.List
 
 data Player = Player
   { hitPoints :: Int,
-    damage :: Int,
-    armour :: Int,
-    cost :: Int
+    damage    :: Int,
+    armour    :: Int,
+    cost      :: Int
   }
   deriving (Show)
 
 data Item = Item
-  { icost :: Int,
+  { icost   :: Int,
     idamage :: Int,
-    iarmor :: Int
+    iarmor  :: Int
   }
   deriving (Show)
 
 type Purchases = Item
 
 main :: IO ()
-main = interact $ show . fork (solve1, solve2)
+main = interact solve
 
-solve1 :: String -> String
-solve1 = show . minimum . fights wins . mkBoss
-
-solve2 :: String -> String
-solve2 = show . maximum . fights losses . mkBoss
+solve :: String -> String
+solve = show . maximum . fights losses . mkBoss
 
 mkBoss :: String -> Player
 mkBoss x = Player hp d a 0

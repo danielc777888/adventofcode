@@ -1,3 +1,5 @@
+-- 141
+
 import Data.List
 import qualified Data.Map as M
 import Data.Maybe
@@ -27,6 +29,6 @@ distances :: ([Location], M.Map Route Distance) -> [Distance]
 distances (ls, rs) = map (distance rs) (permutations ls)
 
 distance :: M.Map Route Distance -> [Location] -> Distance
-distance m [] = 0
-distance m (x : []) = 0
+distance m []           = 0
+distance m (x : [])     = 0
 distance m (x : y : xs) = fromJust (M.lookup (x, y) m) + distance m (y : xs)

@@ -1,22 +1,14 @@
+-- 776160
 -- mathematics, number theory
--- part 2 failed, too inefficient
 
--- hints
--- import qualified Data.Array.Unboxed as UA (UArray, assocs, accumArray)
--- import Data.List (find)
-
-import Aoc.PlumbingCombinator (fork)
 import Data.Array
 import Data.List
 
 main :: IO ()
-main = interact $ show . fork (solve1, id)
+main = interact solve
 
-solve1 :: String -> String
-solve1 = show . head . houses . read
-
-solve2 :: String -> String
-solve2 = show . elves . read
+solve :: String -> String
+solve = show . head . houses . read
 
 houses :: Int -> [Int]
 houses x = [h | h <- [1 ..], presents h >= x]

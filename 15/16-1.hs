@@ -1,4 +1,5 @@
-import Aoc.PlumbingCombinator (fork)
+-- 40
+
 import Data.Function
 import Data.List
 import qualified Data.Map as M
@@ -6,20 +7,17 @@ import qualified Data.Map as M
 type Compounds = M.Map String Int
 
 data Sue = Sue
-  { num :: Int,
+  { num       :: Int,
     diffValue :: Int,
     compounds :: Compounds
   }
   deriving (Show)
 
 main :: IO ()
-main = interact $ show . fork (solve1, solve2)
+main = interact $ show . solve
 
-solve1 :: String -> String
-solve1 = show . minimumBy (compare `on` diffValue) . map (diff analysis . sue) . lines
-
-solve2 :: String -> String
-solve2 = show . minimumBy (compare `on` diffValue) . map (diff' analysis . sue) . lines
+solve :: String -> String
+solve = show . minimumBy (compare `on` diffValue) . map (diff analysis . sue) . lines
 
 analysis :: Compounds
 analysis =

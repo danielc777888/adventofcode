@@ -1,3 +1,5 @@
+-- 1059
+
 import Aoc.Loop (apply)
 import Data.Function
 import Data.List
@@ -14,22 +16,19 @@ type Rest = (Distance, Time)
 type Points = Int
 
 data Reindeer = Reindeer
-  { name :: String,
-    actions :: (Fly, Rest),
-    counter :: (Distance, Time),
+  { name     :: String,
+    actions  :: (Fly, Rest),
+    counter  :: (Distance, Time),
     distance :: Distance,
-    points :: Points
+    points   :: Points
   }
   deriving (Show)
 
 main :: IO ()
-main = interact solve'
+main = interact solve
 
 solve :: String -> String
-solve = show . winner distance . race 2503 . map reindeer . lines
-
-solve' :: String -> String
-solve' = show . winner points . race 2503 . map reindeer . lines
+solve = show . winner points . race 2503 . map reindeer . lines
 
 reindeer :: String -> Reindeer
 reindeer xs = case words xs of

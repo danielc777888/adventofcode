@@ -1,3 +1,5 @@
+-- 709
+
 import Data.List
 import qualified Data.Map as M
 
@@ -11,7 +13,6 @@ main :: IO ()
 main = interact solve
 
 solve :: String -> String
--- solve = show . minimum . totals . arrangements . lines
 solve = show . maximum . map snd . totals . arrangements . lines
 
 arrangements :: [String] -> ([Arrangement], Happiness)

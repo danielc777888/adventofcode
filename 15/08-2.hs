@@ -1,3 +1,5 @@
+-- 2046
+
 main :: IO ()
 main = interact solve
 

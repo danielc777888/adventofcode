@@ -1,9 +1,7 @@
+--
 -- string processing
--- part 1 correct
--- part 2 threw in towel
 {-# LANGUAGE OverloadedStrings #-}
 
-import Aoc.PlumbingCombinator (fork)
 import Control.Applicative
 import Control.Arrow
 import qualified Data.ByteString.Char8 as C
@@ -17,14 +15,10 @@ import qualified Data.Set as S
 type Replacements = M.Map C.ByteString [C.ByteString]
 
 main :: IO ()
---main = interact $ show . fork (solve1, solve3)
-main = undefined
+main = interact solve
 
-solve1 :: String -> String
-solve1 = show . S.size . molecules . replacements . C.lines . C.pack
-
-solve2 :: String -> String
-solve2 = show . steps . replacements . C.lines . C.pack
+solve :: String -> String
+solve = show . steps . replacements . C.lines . C.pack
 
 replacements :: [C.ByteString] -> (C.ByteString, Replacements)
 replacements xs = (mol, reps)

@@ -1,10 +1,10 @@
+-- 2639
+
 main :: IO ()
 main = interact (solve . head . lines)
 
 solve :: String -> String
 solve xs = show . length . remdups . qsort $ simulate (roboSantaInstructions xs) ++ simulate (santaInstructions xs)
-
--- solve xs = show .  remdups . qsort $ simulate (roboSantaInstructions xs)
 
 data Direction = North | South | East | West
 
@@ -17,7 +17,7 @@ direction '^' = North
 direction 'v' = South
 direction '>' = East
 direction '<' = West
-direction _ = error "invalid direction"
+direction _   = error "invalid direction"
 
 santaInstructions :: String -> String
 santaInstructions xs = map snd (filter (odd . fst) (zip [1 ..] xs))
@@ -31,8 +31,8 @@ simulate = remdups . qsort . foldr (\x (y : ys) -> move y (direction x) : y : ys
 move :: Location -> Direction -> Location
 move (x, y) North = (x, y + 1)
 move (x, y) South = (x, y - 1)
-move (x, y) East = (x + 1, y)
-move (x, y) West = (x - 1, y)
+move (x, y) East  = (x + 1, y)
+move (x, y) West  = (x - 1, y)
 
 qsort :: Locations -> Locations
 qsort [] = []
@@ -46,5 +46,5 @@ qsort (x : xs) = sortp xs [] []
         else sortp xs us (y : vs)
 
 remdups :: Locations -> Locations
-remdups [] = []
+remdups []       = []
 remdups (x : xs) = x : remdups (dropWhile (== x) xs)

@@ -1,3 +1,5 @@
+-- 53
+
 main :: IO ()
 main = interact solve
 
@@ -22,9 +24,9 @@ hasPair :: [(String, String)] -> Bool
 hasPair xs = if length (pairs xs) > 0 then True else False
 
 prefixes :: String -> [(String, String)]
-prefixes [] = []
+prefixes []  = []
 prefixes [x] = []
-prefixes xs = [(take 2 xs, tail xs)] ++ prefixes (tail xs)
+prefixes xs  = [(take 2 xs, tail xs)] ++ prefixes (tail xs)
 
 findLongestPair :: String -> String -> String -> [String] -> String
 findLongestPair _ [] _ [] = []
@@ -35,4 +37,4 @@ findLongestPair px xs acc ms = if px == (take 2 xs) then findLongestPair px (tai
 
 hasRepeats :: String -> Bool
 hasRepeats (x : y : z : xs) = if x == z then True else hasRepeats (y : z : xs)
-hasRepeats _ = False
+hasRepeats _                = False
