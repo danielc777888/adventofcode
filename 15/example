@@ -1,7 +1,7 @@
 e => H
-e => O
-H => HO
-H => OH
-O => HH
+e => Oi
+H => HOi
+H => OiH
+Oi => HH
 
-HOHOHO
+HOiHOiHOi
