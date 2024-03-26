@@ -1,3 +1,4 @@
+-- 107035
 
 main :: IO()
 main = interact solve
@@ -18,4 +19,4 @@ expand (x:xs) = x:expand xs
 marker :: String -> (Int,Int)
 marker xs = case (words (map (\c -> if c == 'x' then ' ' else c) xs)) of
   [x,y] -> (read x, read y)
-  _ -> error "marker: Unrecognized pattern"
+  _     -> error "marker: Unrecognized pattern"

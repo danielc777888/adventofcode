@@ -32,7 +32,6 @@ library
     hs-source-dirs:   ., Aoc
     default-language: GHC2021
 
-
 executable 01-1
   import:  common
   main-is: 01-1.hs

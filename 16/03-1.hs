@@ -1,3 +1,5 @@
+-- 993
+
 import Data.List (permutations)
 
 type Triangle = [Int]
@@ -9,7 +11,7 @@ solve :: String -> String
 solve = show . length . filter id .  map (valid . permutations . triangle) . lines
 
 valid :: [Triangle] -> Bool
-valid [] = True
+valid []           = True
 valid ([x,y,z]:xs) = if x + y > z then valid xs else False
 
 triangle :: String -> Triangle

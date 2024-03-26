@@ -1,7 +1,8 @@
+-- 147
 
+import Data.List
 import qualified Data.Map as M
 import Data.Maybe
-import Data.List
 
 type Bot = (Int,(Int,Int))
 type Output = (Int,Int)
@@ -71,14 +72,14 @@ pendingBots xs = foldr insertBot M.empty xs
 insertBot :: Instruction -> M.Map Int (Int,Int) -> M.Map Int (Int,Int)
 insertBot is bm = case is of
   (ValueI (_,y)) -> M.insert y (-1,-1) bm
-  (BotI (x,_)) -> M.insert x (-1,-1) bm
+  (BotI (x,_))   -> M.insert x (-1,-1) bm
 
 
 instruction :: String -> Instruction
 instruction xs = case filter (`notElem` ["goes","to","gives","low","and","high"]) (words xs) of
-  ["value",x,_,y] -> ValueI (read x, read y)
+  ["value",x,_,y]   -> ValueI (read x, read y)
   ["bot",x,l,y,h,z] -> BotI (read x, (sub l (read y), sub h (read z)))
 
 sub :: String -> Int -> Sub
 sub "output" x = OutputS x
-sub "bot" x = BotS x
+sub "bot" x    = BotS x

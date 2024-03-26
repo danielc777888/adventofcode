@@ -1,5 +1,7 @@
-import Data.List (permutations,transpose)
+-- 1849
+
 import Aoc.List (chunk)
+import Data.List (permutations, transpose)
 
 type Triangle = [Int]
 
@@ -10,7 +12,7 @@ solve :: String -> String
 solve = show . length . filter id . map (valid . permutations) . concatMap (chunk 3) . transpose .  map triangle . lines
 
 valid :: [Triangle] -> Bool
-valid [] = True
+valid []           = True
 valid ([x,y,z]:xs) = if x + y > z then valid xs else False
 
 triangle :: String -> Triangle

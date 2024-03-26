@@ -1,3 +1,4 @@
+-- 260
 
 import qualified Data.Set as S
 
@@ -21,8 +22,8 @@ ssl xs = go 0 xs S.empty S.empty
 
 isPattern :: String -> Bool
 isPattern [a,b,c] = a == c && a /= b
-isPattern _ = False
+isPattern _       = False
 
 corr :: String -> String
 corr [a,b,c] = [b, a, b]
-corr xs = xs
+corr xs      = xs

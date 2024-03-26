@@ -1,5 +1,6 @@
-import Data.List (transpose,sort,sortBy)
+-- qoclwvah
 
+import Data.List (sort, sortBy, transpose)
 
 main :: IO()
 main = interact solve

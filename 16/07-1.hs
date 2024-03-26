@@ -1,3 +1,4 @@
+-- 118
 
 main :: IO()
 main = interact solve
@@ -19,4 +20,4 @@ tls xs = go 0 xs False False
 
 isPalindrome :: String -> Bool
 isPalindrome s@[a,b,c,d] = s == (reverse s) && a /= b
-isPalindrome _ = False
+isPalindrome _           = False

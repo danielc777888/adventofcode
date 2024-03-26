@@ -1,3 +1,6 @@
+-- 11451628995
+-- time: 124s
+
 {-# LANGUAGE OverloadedStrings #-}
 
 import qualified Data.ByteString.Lazy.Char8 as BS
@@ -25,7 +28,7 @@ expand xs
 marker :: BS.ByteString -> (Int,Int)
 marker xs = case (BS.words (BS.map (\c -> if c == 'x' then ' ' else c) xs)) of
   [x,y] -> (fst (fromJust (BS.readInt x)), fst (fromJust (BS.readInt y)))
-  _ -> error $ "marker: Unrecognized pattern " ++ (BS.unpack xs)
+  _     -> error $ "marker: Unrecognized pattern " ++ (BS.unpack xs)
 
 divide :: BS.ByteString -> [BS.ByteString]
 divide xs

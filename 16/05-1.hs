@@ -1,6 +1,8 @@
+-- f97c354d
+
+import Crypto.Hash (MD5 (..), hashWith)
 import Data.ByteString.Char8 (pack)
-import Data.Char (ord,chr,intToDigit)
-import Crypto.Hash (hashWith,MD5 (..))
+import Data.Char (chr, intToDigit, ord)
 
 main :: IO()
 main = interact solve

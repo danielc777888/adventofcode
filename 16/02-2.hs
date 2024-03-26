@@ -1,6 +1,6 @@
+-- D65C3
 
 import Data.Char (intToDigit)
-
 
 type Instruction = Char
 type Instructions = [Instruction]
@@ -18,7 +18,7 @@ run x = snd . foldr (\is (y, ys) -> let y' = run' is y in
                          (y', ys ++ [y'])) (x, []) . reverse
 
 run' :: Instructions -> Int -> Int
-run' [] c = c
+run' [] c     = c
 run' (x:xs) c = run' xs (clamp (move x c))
 
 move :: Instruction -> Int -> Int

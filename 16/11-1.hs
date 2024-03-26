@@ -1,3 +1,5 @@
+--
+
 import Aoc.Loop (apply)
 
 type FloorNum = Int
@@ -9,8 +11,8 @@ data Comp = G Id
   | M Id deriving (Show,Eq)
 
 data Sim = Sim {
-  step :: Int,
-  elev :: E,
+  step   :: Int,
+  elev   :: E,
   floors :: [[Comp]]
   } deriving Show
 
@@ -51,16 +53,16 @@ anyM :: Id -> [Comp] -> Bool
 anyM _ [] = False
 anyM n (x:xs) = case x of
   (M id) -> if id == n then True else anyM n xs
-  _ -> anyM n xs
+  _      -> anyM n xs
 
 anyG :: Id -> [Comp] -> Bool
 anyG _ [] = False
 anyG n (x:xs) = case x of
   (G id) -> if id == n then True else anyG n xs
-  _ -> anyG n xs
+  _      -> anyG n xs
 
 anyOtherG :: Id -> [Comp] -> Bool
 anyOtherG _ [] = False
 anyOtherG n (x:xs) = case x of
   (G id) -> if id /= n then True else anyOtherG n xs
-  _ -> anyOtherG n xs
+  _      -> anyOtherG n xs

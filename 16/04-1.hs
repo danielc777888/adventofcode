@@ -1,9 +1,11 @@
+-- 173787
+
 import Aoc.List (splitOn)
 import Data.List (sort, sortBy)
 
 data Room = Room {
-    letters :: String,
-    sector :: Int,
+    letters  :: String,
+    sector   :: Int,
     checksum :: String
   } deriving Show
 

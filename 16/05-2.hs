@@ -1,8 +1,11 @@
+-- 863dde27
+-- time: 35s
+
 import Data.ByteString.Char8 (pack)
-import Data.Char (ord,chr,intToDigit, digitToInt)
+import Data.Char (chr, digitToInt, intToDigit, ord)
 import Data.List (splitAt)
 
-import Crypto.Hash (hashWith,MD5 (..))
+import Crypto.Hash (MD5 (..), hashWith)
 
 main :: IO()
 main = interact solve

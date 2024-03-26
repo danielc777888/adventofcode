@@ -1,12 +1,14 @@
+-- 548
+
 import Aoc.List (splitOn)
 import Aoc.Loop (apply)
-import Data.List (sort, sortBy, intersperse, isInfixOf)
-import Data.Char (ord,chr)
+import Data.Char (chr, ord)
+import Data.List (intersperse, isInfixOf, sort, sortBy)
 
 data Room = Room {
-    name :: String,
-    letters :: String,
-    sector :: Int,
+    name     :: String,
+    letters  :: String,
+    sector   :: Int,
     checksum :: String
   } deriving Show
 

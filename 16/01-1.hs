@@ -1,14 +1,14 @@
+-- 246
 -- taxicab geometry
 
-import qualified Data.Set as S
-import Data.Maybe
 import Data.List
+import Data.Maybe
+import qualified Data.Set as S
 
 main :: IO ()
 main = do
   contents <- getContents
   print $ (distance origin . fst . follow origin Nothing N S.empty . map mkInstruction . words . filter (not . (==','))) contents
-  print $ (distance origin . fromJust . snd . follow origin Nothing N S.empty . map mkInstruction . words . filter (not . (==','))) contents
 
 origin :: (Int, Int)
 origin = (0, 0)
@@ -21,7 +21,7 @@ data Instruction = Instruction Turn Int
 mkInstruction :: String -> Instruction
 mkInstruction ('R':xs) = Instruction TurnRight (read xs)
 mkInstruction ('L':xs) = Instruction TurnLeft (read xs)
-mkInstruction _ = error "invalid instruction"
+mkInstruction _        = error "invalid instruction"
 
 follow :: (Int, Int) -> Maybe (Int, Int) -> Direction -> S.Set (Int, Int) -> [Instruction] -> ((Int, Int), Maybe (Int, Int))
 follow c v d vs [] = (c, v)

@@ -1,4 +1,6 @@
-import Data.List (transpose,sort,sortBy)
+-- ryrgviuv
+
+import Data.List (sort, sortBy, transpose)
 
 main :: IO()
 main = interact solve

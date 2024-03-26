@@ -1,3 +1,5 @@
+-- CFLELOYFCS
+
 import Data.List
 
 type Pixel = ((Int,Int),Bool)
@@ -18,10 +20,10 @@ grid w h = map (\r -> map (\c -> ((r,c),False)) cols) rows
 run :: Grid -> [String] -> Grid
 run g [] = g
 run g (x:xs) = case x' of
-  ["rect", w, h] -> run (rect g (read w) (read h)) xs
+  ["rect", w, h]            -> run (rect g (read w) (read h)) xs
   ["rotate","column",x,_,n] -> run (rotateCol g (read x) (read n)) xs
-  ["rotate","row",_,y,_,n] -> run (rotateRow g (read y) (read n)) xs
-  _ -> error "Unrecognized pattern"
+  ["rotate","row",_,y,_,n]  -> run (rotateRow g (read y) (read n)) xs
+  _                         -> error "Unrecognized pattern"
   where x' = words (map (\c -> if c == '=' || c == 'x' then ' ' else c) x)
 
 lit :: Pixel -> Bool
