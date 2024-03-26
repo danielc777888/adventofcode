@@ -8,7 +8,7 @@ main :: IO ()
 main = interact solve
 
 solve :: String -> String
-solve = show . parse . lines
+solve = show . run . parse . lines
 
 parse :: [String] -> (M.Map String [String], String)
 parse xs = (M.fromListWith (++) ys', head (drop 1 zs))
@@ -17,16 +17,16 @@ parse xs = (M.fromListWith (++) ys', head (drop 1 zs))
                       [k, _, v] -> (k, [v])
                   ) ys
 
-{--
-run :: Int -> String -> (Map String [String], String) -> Int
-run n x (xs, mol) = if x == mol then n else replace xs mol ys 1
-  where ys = fromJust (lookup x xs)
+run :: (M.Map String [String], String) -> Int
+run  (xs, mol) = run' (xs, mol) es 1
+  where es = fromJust (M.lookup "e" xs)
 
-replace :: Int -> String -> (Map String [String], String) -> Int
-replace n mol (xs, mol')
-  | n > 10000000 = n
-  | mol == mol' = n
---}
+run' :: (M.Map String [String], String) -> [String] -> Int -> Int
+run'  (xs, mol) ys n
+  | n > 1000000 = n
+  | any (\y -> length mol == length y && mol == y) ys = n
+  | otherwise = run' (xs, mol) ys' (n+1)
+  where ys' = concatMap (\x -> gen x xs) ys
 
 gen :: [Char] -> M.Map String [String] -> [String]
 gen s m = concat $ scanl (\acc (pf, (x:xs)) -> let ys = fromJust (M.lookup [x] m) in
