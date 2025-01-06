@@ -16,3 +16,7 @@ common common
 executable 01
   import: common
   main-is: 01.hs
+
+executable 02
+  import: common
+  main-is: 02.hs
