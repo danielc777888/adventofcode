@@ -6,16 +6,17 @@ main :: IO ()
 main = do
   putStrLn "2024 -- Day 3 -- Mull It Over"
   contents <- getContents
-  let input = parse contents
---  print input
+  let input = parse contents True
   putStrLn ("Part 1: " <> output (part1 input))
---  putStrLn ("Part 2: " <> output (part2 contents))
+  putStrLn ("Part 2: " <> output (part2 input))
 
-parse :: String -> [(Int,Int)]
-parse [] = []
-parse s@(_:xs)
-  | "mul(" `isPrefixOf` s = if isJust t then (fromJust t):parse xs else parse xs
-  | otherwise = parse xs
+parse :: String -> Bool -> [((Int,Int), Bool)]
+parse [] _ = []
+parse s@(_:xs) d
+  | "don't()" `isPrefixOf` s = parse (drop 7 s) False
+  | "do()" `isPrefixOf` s = parse (drop 4 s) True
+  | "mul(" `isPrefixOf` s = if isJust t then ((fromJust t), d) :parse xs d else parse xs d
+  | otherwise = parse xs d
     where t = tuple s
 
 tuple :: String -> Maybe (Int, Int)
@@ -32,13 +33,12 @@ int xs = if null xs' then (Nothing, xs) else (Just xs', dropWhile isDigit xs)
   where xs' = takeWhile isDigit xs
 
 -- 180233229
-part1 :: [(Int, Int)] -> Int
-part1 = sum . map (\(x, y) -> x * y)
+part1 :: [((Int, Int), Bool)] -> Int
+part1 = sum . map (\((x, y), _) -> x * y)
 
--- 
-part2 :: String -> Int
-part2 = undefined
+-- 95411583
+part2 :: [((Int, Int), Bool)] -> Int
+part2 = sum . map (\((x, y), _) -> x * y) . filter snd
 
 output :: Int -> String
 output = show
-
