@@ -9,7 +9,7 @@ extra-source-files: CHANGELOG.md
 tested-with: GHC == 9.12.1
 
 common common
-  build-depends: base ^>= 4.21.0.0
+  build-depends: base ^>= 4.21.0.0, containers ^>= 0.7
   ghc-options: -O2 -Wall -ferror-spans -threaded -rtsopts
   default-language: GHC2024
 
@@ -28,3 +28,7 @@ executable 03
 executable 04
   import: common
   main-is: 04.hs
+
+executable 05
+  import: common
+  main-is: 05.hs
