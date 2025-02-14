@@ -8,20 +8,19 @@ main = do
   putStrLn "2024 -- Day 5 -- Print Queue"
   contents <- getContents
   let input = parse contents
-  -- putStrLn $ show input
-  putStrLn ("Part 1: " <> output (part1 input))
+  putStrLn ("Part 1: " <> show (part1 input))
   putStrLn ("Part 2: " <> output (part2 input))
 
 parse :: String -> ([(Int, Int)], [[Int]])
 parse s = (rules, pages)
   where
     (sr, sp) = break (=="") $ lines s
-    pages = map intArray $ drop 1 sp
+    pages = map ints $ drop 1 sp
     rules = map (\l -> let (s1, s2) = break (=='|') l
                 in (read s1, read (drop 1 s2))) sr
     
 
--- 
+-- 4281
 part1 :: ([(Int, Int)], [[Int]]) -> Int
 part1 (rs, ps) = sum $ map (\p ->
                               let l = length p in
@@ -36,11 +35,11 @@ part2 (rs, ps) = 0
 output :: Int -> String
 output = show
 
-intArray :: String -> [Int]
-intArray [] = []
-intArray s@(x:xs)
-  | x == ',' = intArray xs
-  | otherwise = read (takeWhile isDigit s) : intArray (dropWhile isDigit s)
+ints :: String -> [Int]
+ints [] = []
+ints s@(x:xs)
+  | x == ',' = ints xs
+  | otherwise = read (takeWhile isDigit s) : ints (dropWhile isDigit s)
 
 mkRules :: [(Int, Int)] -> M.Map Int (S.Set Int) -> M.Map Int (S.Set Int)
 mkRules [] m = m
@@ -51,12 +50,13 @@ mkRules ((x, y):xs) m
 
 valid :: M.Map Int (S.Set Int) -> [Int] -> Bool
 valid _ [] = True
-valid _ [x] = True
+valid _ [_] = True
 valid m (x:y:xs) = if asc x y m then valid m (y:xs) else False
+
 
 asc :: Int -> Int -> M.Map Int (S.Set Int) -> Bool
 asc x y m
-  | M.member x m = if S.member y ys then True else any id $ map (\y' -> asc y' y m) (S.toList ys)
+  | M.member x m = if S.member y ys then True else False
   | otherwise = False
     where ys = fromJust $ M.lookup x m
 
