@@ -20,7 +20,7 @@ main = do
   putStrLn "2024 -- Day 6 -- Guard Gallivant"
   contents <- getContents
   let input = parse contents
-  print input
+  --print input
   putStrLn ("Part 1: " <> show (part1 input))
   putStrLn ("Part 2: " <> show (part2 input))
 
