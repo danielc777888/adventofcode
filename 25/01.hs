@@ -4,27 +4,26 @@ main :: IO ()
 main = do
   putStrLn "2025 -- Day 1 -- Secret Entrance"
   contents <- getContents
-  let input = parse contents
+  let input = lines contents
   putStrLn ("Part 1: " <> show (part1 input))
   putStrLn ("Part 2: " <> show (part2 input))
 
-parse :: String -> [String]
-parse = lines
-
 -- 1018
 part1 :: [String] -> Int
-part1  = rotate 50
+part1  = snd . foldl rotate (50, 0)
+--rotate 50
 
 -- 
 part2 :: [String] -> Int
 part2 xs = 1
 
-rotate :: Int -> [String] -> Int
-rotate _ [] = 0
-rotate x (y:ys)
-  | "L" `isPrefixOf` y = let x' = rotateLeft x (read (tail y)) in if x' == 0 then 1 + rotate x' ys else rotate x' ys
-  | "R" `isPrefixOf` y = let x' = rotateRight x (read (tail y)) in if x' == 0 then 1 + rotate x' ys else rotate x' ys
-  | otherwise = error ("Unknown pattern: " <> y)
+rotate :: (Int, Int) -> String -> (Int, Int)
+rotate (p, s) (x:xs) 
+  | x == 'L' = if lp == 0 then (lp, s + 1) else (lp, s)
+  | x == 'R' =  if rp == 0 then (rp, s + 1) else (rp, s)
+  where lp = rotateLeft p p'
+        rp = rotateRight p p'
+        p' = read xs
 
 rotateLeft :: Int -> Int -> Int
 rotateLeft x y = (x - y) `mod` 100
