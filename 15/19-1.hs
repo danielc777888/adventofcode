@@ -2,14 +2,10 @@
 -- string processing
 {-# LANGUAGE OverloadedStrings #-}
 
-import Control.Applicative
-import Control.Arrow
 import qualified Data.ByteString.Char8 as C
 import Data.List
-import Data.List.Split
 import qualified Data.Map as M
 import Data.Maybe
-import Data.Semigroup
 import qualified Data.Set as S
 
 type Replacements = M.Map C.ByteString [C.ByteString]
@@ -43,25 +39,3 @@ molecules' (x, xs) (a, b) s
     a' n = C.append a (C.take n b)
     b' n = C.drop n b
     s' k n = foldl' (\acc r -> S.insert (C.append a (C.append r (C.drop n b))) acc) s $ fromJust $ M.lookup k xs
-
-steps :: (C.ByteString, Replacements) -> Int
-steps (x, xs) = minimum ys
-  where
-    xs' = S.fromList $ fromJust $ M.lookup "e" xs
-    (ys, s) = steps' (x, C.length x, xs) xs' 1 []
-
-steps' :: (C.ByteString, Int, Replacements) -> S.Set C.ByteString -> Int -> [Int] -> ([Int], S.Set C.ByteString)
-steps' (x, l, xs) ys n zs
-  | n == 250 = (zs, ys)
-  | n < l = steps' (x, l, xs) ys' (n + 1) zs
-  | S.member x ys = (n : zs, ys)
-  | otherwise = (zs, ys)
-  where
-    ys' =
-      S.foldl'
-        ( \acc m ->
-            let ms = molecules (m, xs)
-             in S.union acc ms
-        )
-        S.empty
-        (S.take 100 ys)
