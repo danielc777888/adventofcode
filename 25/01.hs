@@ -1,4 +1,3 @@
-import Data.List
 
 main :: IO ()
 main = do
@@ -10,23 +9,30 @@ main = do
 
 -- 1018
 part1 :: [String] -> Int
-part1  = snd . foldl rotate (50, 0)
---rotate 50
+part1  = (\(_, _, x) -> x) . foldl rotate (50, 0, 0)
 
--- 
+-- 5815
 part2 :: [String] -> Int
-part2 xs = 1
+part2 = (\(_, x, _) -> x) . foldl rotate (50, 0, 0)
 
-rotate :: (Int, Int) -> String -> (Int, Int)
-rotate (p, s) (x:xs) 
-  | x == 'L' = if lp == 0 then (lp, s + 1) else (lp, s)
-  | x == 'R' =  if rp == 0 then (rp, s + 1) else (rp, s)
-  where lp = rotateLeft p p'
-        rp = rotateRight p p'
+rotate :: (Int, Int, Int) -> String -> (Int, Int, Int)
+rotate (p, s, sp) (x:xs) 
+  | x == 'L' = (lp, s + ld, sp + lps)
+  | x == 'R' = (rp, s + rd, sp + rps)
+  where (lp, ld, lps) = rotateL p p' p (0, 0)
+        (rp, rd, rps) = rotateR p p' p (0, 0)
         p' = read xs
 
-rotateLeft :: Int -> Int -> Int
-rotateLeft x y = (x - y) `mod` 100
+rotateL :: Int -> Int -> Int -> (Int, Int) -> (Int, Int, Int)
+rotateL s e c (z, zp) 
+  | e == 0 = (c, z, if c == 0 then zp + 1 else zp)
+  | c == 0 = rotateL s (e - 1) c' (z + 1, zp)
+  | otherwise = rotateL s (e - 1) c' (z, zp)
+  where c' = if (c - 1) == (-1) then 99 else (c - 1)
 
-rotateRight :: Int -> Int -> Int
-rotateRight x y = (x + y) `mod` 100
+rotateR :: Int -> Int -> Int -> (Int, Int) -> (Int, Int, Int)
+rotateR s e c (z, zp) 
+  | e == 0 = (c, z, if c == 0 then zp + 1 else zp)
+  | c == 0 = rotateR s (e - 1) c' (z + 1, zp)
+  | otherwise = rotateR s (e - 1) c' (z, zp)
+  where c' = if (c + 1) == 100 then 0 else (c + 1)
