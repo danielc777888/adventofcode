@@ -6,11 +6,11 @@ author:             daniel cabral
 maintainer:         danielc777888@gmail.com
 build-type:         Simple
 extra-source-files: CHANGELOG.md
-tested-with: GHC == 9.12.1
+tested-with: GHC == 9.12.2
 
 common common
   build-depends: base ^>= 4.21.0.0,
-                 containers ^>= 0.7,
+                 containers ^>= 0.8,
                  array ^>= 0.5.8.0
   ghc-options: -O2 -Wall -ferror-spans -threaded -rtsopts
   default-language: Haskell2010
@@ -21,5 +21,5 @@ executable 01
 
 executable 02
   import: common
-  build-depends: text ^>= 2.1.2
+  build-depends: text ^>= 2.1.3
   main-is: 02.hs
