@@ -16,16 +16,21 @@ main = do
 
 
 parse :: T.Text -> [Range]
-parse = map (\y -> let [f, t] = T.splitOn "-" y 
-                       in (read (T.unpack f), read (T.unpack t))) .  (T.splitOn ",")
+parse = map (\y -> let [f, t] = T.splitOn "-" y
+                       in (read (T.unpack f), read (T.unpack t))) .  T.splitOn ","
 
--- 
+-- PASS
 part1 :: [Range] -> Integer
-part1 = (foldr (+) 0) . concatMap (\(x, y) -> filter invalid [x .. y])
+part1 = sum . concatMap (\(x, y) -> filter invalid [x .. y])
 
--- 
+-- FAIL
 part2 :: T.Text -> T.Text
 part2 = id
 
 invalid :: Integer -> Bool
-invalid x = True
+invalid x = xs == ys
+  where
+    x' = show x 
+    mid = length x' `div` 2
+    (xs, ys) = splitAt mid x'
+
