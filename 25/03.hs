@@ -19,7 +19,7 @@ part1 = sum . map largestJoltage
 -- if not found go to next number in final set
 part2 :: [String] -> Integer
 part2 = sum . map largestJoltage'
--- part2 = map largestJoltage'
+--part2 = map largestJoltage'
 
 mss :: Int -> String -> Integer
 mss b = read . maximum . filter (short b) . segments
@@ -48,7 +48,18 @@ largestJoltage xs = read [d1 ,d2]
 largestJoltage' :: String -> Integer
 largestJoltage' xs = read mx
   where (ys, zs) = splitAt (length xs - 12) xs
-        mx = max (take 12 xs) (findLargest ys zs)
+        xs' = zip [0..] xs
+        rg = (0, length xs - 12)
+        mx = calcLargest xs' rg
+
+calcLargest :: [(Int, Char)] -> (Int, Int) -> String
+calcLargest xs (s, e)
+  | e == length xs = []
+  | otherwise = snd mx : calcLargest xs (s', e')
+  where mx = maximumBy (\a b -> case compare (snd a) (snd b) of EQ -> GT; o -> o) xs'
+        xs' = filter (\(x, y) -> x >= s && x <= e) xs
+        s' = fst mx + 1
+        e' = e + 1
 
 findLargest :: String -> String -> String
 findLargest [] ys = ys
