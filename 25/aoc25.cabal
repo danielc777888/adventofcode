@@ -31,3 +31,7 @@ executable 03
 executable 04
   import: common
   main-is: 04.hs
+
+executable 05
+  import: common
+  main-is: 05.hs
