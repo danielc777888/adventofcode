@@ -48,3 +48,8 @@ removeRolls :: (Grid, Nat, Int) -> (Grid, Nat, Int)
 removeRolls (g, n, _) = (g // rrs, n + d, d)
   where rrs = foldr (\x acc -> if access g x then (fst x, False):acc else acc) [] (assocs g)
         d = length rrs
+
+input :: String
+input = "
+  ASASA
+"
