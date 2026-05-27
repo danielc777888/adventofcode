@@ -6,17 +6,17 @@ type Grid = Array (Nat, Nat) Bool
 main :: IO ()
 main = do
   putStrLn "2025 --- Day 4: Printing Department ---"
-  c <- getContents
+  c <- readFile "04.in"
   let g = mkGrid c 
   putStrLn ("Part 1: " <> show (part1 g))
   putStrLn ("Part 2: " <> show (part2 g))
 
--- 1505
+-- 1540
 part1 :: Grid -> Nat
 part1 g = n
   where (_, n, _) = removeRolls (g, 0, -1)
 
--- 9182
+-- 8972
 part2 :: Grid -> Nat 
 part2 g = n
   where (_, n, _) = until noMoreRolls removeRolls (g, 0, -1)
@@ -48,8 +48,3 @@ removeRolls :: (Grid, Nat, Int) -> (Grid, Nat, Int)
 removeRolls (g, n, _) = (g // rrs, n + d, d)
   where rrs = foldr (\x acc -> if access g x then (fst x, False):acc else acc) [] (assocs g)
         d = length rrs
-
-input :: String
-input = "
-  ASASA
-"

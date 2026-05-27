@@ -9,9 +9,8 @@ type Range = (Integer, Integer)
 main :: IO ()
 main = do
   putStrLn "2025 -- Day 2 -- Gift Shop"
-  contents <- TI.getContents
+  contents <- TI.readFile "02.in"
   let ranges = parse contents
-  print ranges
   putStrLn ("Part 1: " <> show (part1 ranges))
   putStrLn ("Part 2: " <> show (part2 ranges))
 

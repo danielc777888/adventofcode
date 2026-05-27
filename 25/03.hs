@@ -5,12 +5,12 @@ type Nat = Int
 main :: IO ()
 main = do
   putStrLn "2025 -- Day 3 -- Lobby"
-  contents <- getContents
+  contents <- readFile "03.in"
   let banks = lines contents
   putStrLn ("Part 1: " <> show (part1 banks))
   putStrLn ("Part 2: " <> show (part2 banks))
 
--- 17445
+-- 17524
 part1 :: [String] -> Integer
 part1 = sum . map (largestJoltage 2)
 
