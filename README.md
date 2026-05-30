@@ -1,10 +1,10 @@
 # Advent of Code
-Advent of code puzzles with haskell: _https://adventofcode.com/_
+Advent of code puzzles with Haskell: _https://adventofcode.com/_
 
 ## Running
 - Ensure you have ghcup installed: _https://www.haskell.org/ghcup/_
 - Navigate to a year eg._cd 25_
-- Ensure correct ghc and cabal versions selected: _./setghc_
+- Ensure correct ghc and cabal versions installed and selected: _./setghc_
 - Execute daily challenge eg._cabal run 01_
 
 ## Status
@@ -20,7 +20,7 @@ Advent of code puzzles with haskell: _https://adventofcode.com/_
 | 2022 | 16/50  |
 | 2023 | 17/50  |
 | 2024 | 10/50  |
-| 2025 | 6/24   |
+| 2025 | 10/24   |
 
 ## Other Haskell Repos
 - https://github.com/glguy/advent
