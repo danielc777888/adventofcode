@@ -26,3 +26,7 @@ Advent of code puzzles with Haskell: _https://adventofcode.com/_
 - https://github.com/glguy/advent
 - https://github.com/byorgey/AoC
 - https://github.com/mstksg/advent-of-code
+
+## Design Constraints
+- Minimize dependencies on external libs, try to depend only on core/standard Haskell libs.
+- No common library for solutions,
