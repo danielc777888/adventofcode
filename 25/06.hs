@@ -1,3 +1,4 @@
+import Data.Char
 import Data.List
 
 data Prob = Prob [Integer] Op
@@ -12,25 +13,43 @@ main = do
   c <- readFile "06.in"
   let i = input c
   putStrLn $ "Part1: " <> show (part1 i)
---  putStrLn $ "Part2: " <> show (part2 (fst i))
+  let i2 = input2 c
+  putStrLn $ show i2
+  putStrLn $ "Part2: " <> show (part2 i2)
 
 input :: String -> [Prob]
 input s = map mkProb xss
   where xss = transpose (map words (lines s))
+
+input2 :: String -> [Prob]
+input2 s = mkProbs xss
+  where xss = transpose (lines s)
+
+mkProbs :: [String] -> [Prob]
+mkProbs [] = []
+mkProbs (x:xs)
+  | all isSpace x = mkProbs xs
+  | otherwise = mkProb2 (x:xs) : mkProbs (dropWhile (not . all isSpace) xs)
 
 mkProb :: [String] -> Prob
 mkProb xs = Prob nums op
   where op = if last xs == "*" then Mult else Add
         nums = map read (init xs)
 
+mkProb2 :: [String] -> Prob
+mkProb2 xs = Prob nums op
+  where xs' = takeWhile (not . all isSpace) xs
+        nums = map (read . filter (not . isSpace) . init) xs'
+        op = if '*' `elem` (head xs') then Mult else Add
+
 solve :: Prob -> Integer
 solve (Prob nums Add) = foldr1 (+) nums
 solve (Prob nums Mult) = foldr1 (*) nums
 
--- 
+-- 6378679666679
 part1 :: [Prob] -> Integer
 part1  = sum . map solve
 
---
---part2 :: [Range] -> Nat
---part2  = sum . map (\(x, y) -> (y - x) + 1) . mergeRanges
+--11494432585168 
+part2 :: [Prob] -> Integer
+part2  = part1
