@@ -15,7 +15,7 @@ common common
     array ^>= 0.5.8.0
   ghc-options: -O2 -Wall -ferror-spans -threaded -rtsopts
   default-language: Haskell2010
-  default-extensions: MultilineStrings
+  default-extensions: MultilineStrings, OverloadedStrings
 
 executable 01
   import: common
