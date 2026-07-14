@@ -42,17 +42,17 @@ mkProb2 xs = Prob nums op
         op = if '*' `elem` (safeHead xs') then Mult else Add
 
 safeHead :: [String] -> String
-safeHead [] = ""
+safeHead []    = ""
 safeHead (x:_) = x
 
 solve :: Prob -> Integer
-solve (Prob nums Add) = foldr1 (+) nums
+solve (Prob nums Add)  = foldr1 (+) nums
 solve (Prob nums Mult) = foldr1 (*) nums
 
 -- 6378679666679
 part1 :: [Prob] -> Integer
 part1 = sum . map solve
 
---11494432585168 
+-- 11494432585168
 part2 :: [Prob] -> Integer
 part2 = part1
